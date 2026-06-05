@@ -342,7 +342,7 @@ namespace Microsoft.CodeAnalysis
             }
             else
             {
-                Debug.Assert(data.IndexOf('\0') == -1);
+                Debug.Assert(!data.Contains('\0'));
 
                 fixed (char* p = data)
                 {
@@ -439,7 +439,7 @@ namespace Microsoft.CodeAnalysis
             string assemblyName = name.Name;
             if (assemblyName != null)
             {
-                if (assemblyName.IndexOf('\0') >= 0)
+                if (assemblyName.Contains('\0'))
                 {
 #if SCRIPTING
                     throw new ArgumentException(Scripting.ScriptingResources.InvalidCharactersInAssemblyName, nameof(name));
@@ -464,7 +464,7 @@ namespace Microsoft.CodeAnalysis
             string cultureName = name.CultureName;
             if (cultureName != null)
             {
-                if (cultureName.IndexOf('\0') >= 0)
+                if (cultureName.Contains('\0'))
                 {
 #if SCRIPTING
                     throw new ArgumentException(Microsoft.CodeAnalysis.Scripting.ScriptingResources.InvalidCharactersInAssemblyName, nameof(name));
@@ -499,7 +499,7 @@ namespace Microsoft.CodeAnalysis
         internal static IAssemblyName ToAssemblyNameObject(string displayName)
         {
             // CLR doesn't handle \0 in the display name well:
-            if (displayName.IndexOf('\0') >= 0)
+            if (displayName.Contains('\0'))
             {
                 return null;
             }

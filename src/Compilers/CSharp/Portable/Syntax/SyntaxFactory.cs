@@ -339,7 +339,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 throw new ArgumentNullException(nameof(valueText));
             }
 
-            if (text.StartsWith("@", StringComparison.Ordinal))
+            if (text.StartsWith('@'))
             {
                 throw new ArgumentException("text should not start with an @ character.");
             }

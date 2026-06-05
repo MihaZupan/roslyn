@@ -719,7 +719,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             NamedTypeSymbol? type;
             MetadataTypeName mdName;
 
-            if (metadataName.IndexOf('+') >= 0)
+            if (metadataName.Contains('+'))
             {
                 var parts = metadataName.Split(s_nestedTypeNameSeparators);
                 Debug.Assert(parts.Length > 0);

@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
@@ -25,8 +26,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         public static CSharpCommandLineParser Default { get; } = new CSharpCommandLineParser();
         public static CSharpCommandLineParser Script { get; } = new CSharpCommandLineParser(isScriptCommandLineParser: true);
 
-        private static readonly char[] s_quoteOrEquals = new[] { '"', '=' };
-        private static readonly char[] s_warningSeparators = new char[] { ',', ';', ' ' };
+        private static readonly SearchValues<char> s_warningSeparators = SearchValues.Create(",; \"");
 
         internal CSharpCommandLineParser(bool isScriptCommandLineParser = false)
             : base(CSharp.MessageProvider.Instance, isScriptCommandLineParser)
@@ -166,7 +166,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             foreach (string arg in flattenedArgs)
             {
-                Debug.Assert(optionsEnded || !arg.StartsWith("@", StringComparison.Ordinal));
+                Debug.Assert(optionsEnded || !arg.StartsWith('@'));
 
                 ArrayBuilder<string> filePathBuilder;
                 ReadOnlyMemory<char> nameMemory;
@@ -210,7 +210,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                     {
                         AddDiagnostic(diagnostics, ErrorCode.ERR_SwitchNeedsString, MessageID.IDS_Text.Localize(), "/langversion:");
                     }
-                    else if (value.StartsWith("0", StringComparison.Ordinal))
+                    else if (value.StartsWith('0'))
                     {
                         // This error was added in 7.1 to stop parsing versions as ints (behaviour in previous Roslyn compilers), and explicitly
                         // treat them as identifiers (behaviour in native compiler). This error helps users identify that breaking change.
@@ -1951,7 +1951,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             // /r:nonidf=reference               ... error 1679
 
             var valueSpan = value.Span;
-            int eqlOrQuote = valueSpan.IndexOfAny(s_quoteOrEquals);
+            int eqlOrQuote = valueSpan.IndexOfAny('"', '=');
 
             string? alias;
             if (eqlOrQuote >= 0 && valueSpan[eqlOrQuote] == '=')

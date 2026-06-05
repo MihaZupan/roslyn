@@ -142,7 +142,7 @@ internal struct WordSimilarityChecker : IDisposable
             // in the string we're currently looking at.  That's enough to consider it
             // although we place it just at the threshold (i.e. it's worse than all
             // other matches).
-            if (_substringsAreSimilar && candidateText.IndexOf(_source, StringComparison.OrdinalIgnoreCase) >= 0)
+            if (_substringsAreSimilar && candidateText.Contains(_source, StringComparison.OrdinalIgnoreCase))
             {
                 similarityWeight = _threshold;
             }

@@ -5,6 +5,7 @@
 #nullable disable
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
@@ -22,7 +23,7 @@ namespace Microsoft.CodeAnalysis.Diagnostics
         [StructLayout(LayoutKind.Auto)]
         private struct TargetSymbolResolver
         {
-            private static readonly char[] s_nameDelimiters = { ':', '.', '+', '(', ')', '<', '>', '[', ']', '{', '}', ',', '&', '*', '`' };
+            private static readonly SearchValues<char> s_nameDelimiters = SearchValues.Create(":.+()<>[]{},&*`");
             private static readonly string[] s_callingConventionStrings =
             {
                 "[vararg]",
@@ -266,12 +267,11 @@ namespace Microsoft.CodeAnalysis.Diagnostics
                 string segment;
 
                 // Find the end of the next name segment, special case constructors which start with '.'
-                int delimiterOffset = PeekNextChar() == '.' ?
-                    _name.IndexOfAny(s_nameDelimiters, _index + 1) :
-                    _name.IndexOfAny(s_nameDelimiters, _index);
-
+                int searchStart = PeekNextChar() == '.' ? _index + 1 : _index;
+                int delimiterOffset = _name.AsSpan(searchStart).IndexOfAny(s_nameDelimiters);
                 if (delimiterOffset >= 0)
                 {
+                    delimiterOffset += searchStart;
                     segment = _name[_index..delimiterOffset];
                     _index = delimiterOffset;
                 }

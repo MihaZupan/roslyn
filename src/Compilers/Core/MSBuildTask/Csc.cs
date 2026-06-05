@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Buffers;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
@@ -26,6 +27,8 @@ namespace Microsoft.CodeAnalysis.BuildTasks
     /// </summary>
     public class Csc : ManagedCompiler
     {
+        private static readonly SearchValues<char> s_invalidAliasChars = SearchValues.Create(" ;\"=");
+
         #region Properties
 
         // Please keep these alphabetized.  These are the parameters specific to Csc.  The
@@ -399,7 +402,7 @@ namespace Microsoft.CodeAnalysis.BuildTasks
                         // error out on those.  The ones we're checking for here are the ones
                         // that could seriously screw up the command-line parsing or could
                         // allow parameter injection.
-                        if (trimmedAlias.AsSpan().IndexOfAny([' ', ';', '"', '=']) != -1)
+                        if (trimmedAlias.AsSpan().ContainsAny(s_invalidAliasChars))
                         {
                             throw Utilities.GetLocalizedArgumentException(
                                 ErrorString.Csc_AssemblyAliasContainsIllegalCharacters,
@@ -430,7 +433,7 @@ namespace Microsoft.CodeAnalysis.BuildTasks
                         return;
                     }
 
-                    var index = itemSpec.AsSpan().IndexOfAny(['"', '=']);
+                    var index = itemSpec.AsSpan().IndexOfAny('"', '=');
                     if (index >= 0 && itemSpec[index] == '=')
                     {
                         // The presence of a = in the name before the first quote will cause the

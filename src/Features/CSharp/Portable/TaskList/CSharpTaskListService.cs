@@ -82,7 +82,7 @@ internal sealed class CSharpTaskListService : AbstractTaskListService
     protected override bool PreprocessorHasComment(SyntaxTrivia trivia)
     {
         return trivia.Kind() != SyntaxKind.RegionDirectiveTrivia &&
-               SyntaxFacts.IsPreprocessorDirective(trivia.Kind()) && trivia.ToString().IndexOf(SingleLineCommentPrefix, StringComparison.Ordinal) > 0;
+               SyntaxFacts.IsPreprocessorDirective(trivia.Kind()) && trivia.ToString().Contains(SingleLineCommentPrefix, StringComparison.Ordinal);
     }
 
     protected override bool IsSingleLineComment(SyntaxTrivia trivia)

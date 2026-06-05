@@ -12,6 +12,7 @@ using System.Text.Json;
 
 #if NET
 using System.Diagnostics.CodeAnalysis;
+using Roslyn.Utilities;
 #endif
 
 namespace Microsoft.SourceLink.Tools;
@@ -143,7 +144,7 @@ internal readonly struct SourceLinkMap
             uriPrefix = value[..uriStar];
             uriSuffix = value[(uriStar + 1)..];
 
-            if (uriSuffix.IndexOf('*') >= 0)
+            if (uriSuffix.Contains('*'))
             {
                 return false;
             }
@@ -177,7 +178,7 @@ internal readonly struct SourceLinkMap
             throw new ArgumentNullException(nameof(path));
         }
 
-        if (path.IndexOf('*') >= 0)
+        if (path.Contains('*'))
         {
             uri = null;
             return false;

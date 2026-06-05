@@ -96,7 +96,7 @@ internal static class SyntaxTriviaExtensions
 
                 // Note: we trim leading '*' characters in multi-line comments.
                 // If the '*' was intentional, sorry, it's gone.
-                if (trimmedLine.StartsWith("*", StringComparison.Ordinal))
+                if (trimmedLine.StartsWith('*'))
                 {
                     trimmedLine = trimmedLine.TrimStart('*');
                     trimmedLine = trimmedLine.TrimStart(null);

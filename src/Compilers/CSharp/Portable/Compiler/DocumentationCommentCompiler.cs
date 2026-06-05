@@ -1123,7 +1123,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                     trimmed.StartsWith("/** ") ? 4 :
                     trimmed.StartsWith("/**") ? 3 :
                     trimmed.StartsWith("* ") ? 2 :
-                    trimmed.StartsWith("*") ? 1 :
+                    trimmed.StartsWith('*') ? 1 :
                     0));
             }
 

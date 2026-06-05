@@ -72,7 +72,7 @@ internal sealed class CSharpRemoveUnnecessaryImportsDiagnosticAnalyzer :
     {
         // We've opted in to generated code analysis above, but we actually only want to analyze generated code for Razor
         if (context.IsGeneratedCode &&
-            tree.FilePath.IndexOf("Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator") == -1)
+            !tree.FilePath.Contains("Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator"))
         {
             return;
         }

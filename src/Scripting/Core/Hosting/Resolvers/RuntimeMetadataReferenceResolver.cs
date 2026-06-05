@@ -43,8 +43,6 @@ namespace Microsoft.CodeAnalysis.Scripting.Hosting
         // The extensions are in order in which the CLR loader looks for assembly files.
         internal static ImmutableArray<string> AssemblyExtensions = ImmutableArray.Create(".dll", ".exe");
 
-        private static readonly char[] s_directorySeparators = [PathUtilities.DirectorySeparatorChar, PathUtilities.AltDirectorySeparatorChar];
-
         /// <summary>
         /// Creates a resolver that uses the current platform settings (GAC, platform assembly list).
         /// </summary>
@@ -152,7 +150,7 @@ namespace Microsoft.CodeAnalysis.Scripting.Hosting
             }
             else if (PathUtilities.IsFilePath(reference))
             {
-                if (!TrustedPlatformAssemblies.IsEmpty && reference.IndexOfAny(s_directorySeparators) < 0)
+                if (!TrustedPlatformAssemblies.IsEmpty && !reference.AsSpan().ContainsAny(PathUtilities.DirectorySeparatorChar, PathUtilities.AltDirectorySeparatorChar))
                 {
                     var result = ResolveTrustedPlatformAssembly(PathUtilities.GetFileName(reference, includeExtension: false), properties);
                     if (result != null)

@@ -4,6 +4,7 @@
 
 #nullable disable
 
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -195,14 +196,12 @@ internal abstract class AbstractSpellCheckCodeFixProvider<TSimpleName> : CodeFix
         }
     }
 
-    private static readonly char[] s_punctuation = ['(', '[', '<'];
-
     private static async Task<string> GetInsertionTextAsync(Document document, CompletionItem item, CancellationToken cancellationToken)
     {
         var service = CompletionService.GetService(document);
         var change = await service.GetChangeAsync(document, item, commitCharacter: null, cancellationToken).ConfigureAwait(false);
         var text = change.TextChange.NewText;
-        var nonCharIndex = text.IndexOfAny(s_punctuation);
+        var nonCharIndex = text.AsSpan().IndexOfAny('(', '[', '<');
         return nonCharIndex > 0
             ? text[0..nonCharIndex]
             : text;

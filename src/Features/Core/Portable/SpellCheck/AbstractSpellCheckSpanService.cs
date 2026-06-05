@@ -13,6 +13,7 @@ using Microsoft.CodeAnalysis.LanguageService;
 using Microsoft.CodeAnalysis.PooledObjects;
 using Microsoft.CodeAnalysis.Shared.Extensions;
 using Microsoft.CodeAnalysis.Text;
+using Roslyn.Utilities;
 
 namespace Microsoft.CodeAnalysis.SpellCheck;
 
@@ -128,7 +129,7 @@ internal abstract class AbstractSpellCheckSpanService(char? escapeCharacter) : I
             var escapeChar = _spellCheckSpanService._escapeCharacter;
             if (canContainEscapes &&
                 escapeChar != null &&
-                token.Text.AsSpan().IndexOf(escapeChar.Value) >= 0)
+                token.Text.Contains(escapeChar.Value))
             {
                 AddStringSubSpans(token);
             }

@@ -2086,7 +2086,7 @@ internal class DefaultRazorIntermediateNodeLoweringPhase : RazorEnginePhaseBase,
 
         private bool? _hasParameter;
 
-        public bool HasParameter => _hasParameter ??= Span.IndexOf(':') >= 0;
+        public bool HasParameter => _hasParameter ??= Span.Contains(':');
 
         public string TextWithoutParameter
             => field ??= Span.IndexOf(':') is int index && index >= 0 ? Span[..index].ToString() : Text;

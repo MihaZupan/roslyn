@@ -32,7 +32,7 @@ internal class DefaultMetadataIdentifierFeature : RazorEngineFeatureBase, IMetad
 
         var identifier = sourceDocument.RelativePath;
         identifier = identifier.Replace("\\", "/");
-        if (!identifier.StartsWith("/", StringComparison.Ordinal))
+        if (!identifier.StartsWith('/'))
         {
             identifier = "/" + identifier;
         }

@@ -15,7 +15,7 @@ namespace IOperationGenerator
 
             foreach (var abstractNode in tree.Types.OfType<AbstractNode>())
             {
-                if (!abstractNode.Name.StartsWith("I"))
+                if (!abstractNode.Name.StartsWith('I'))
                 {
                     Console.WriteLine($"All IOperation node names must start with I. {abstractNode.Name} does not.");
                     error = true;
@@ -65,7 +65,7 @@ namespace IOperationGenerator
 
                 foreach (var prop in GetAllGeneratedIOperationProperties(abstractNode))
                 {
-                    if (IsImmutableArray(prop.Type, out _) && prop.Type.Contains("?"))
+                    if (IsImmutableArray(prop.Type, out _) && prop.Type.Contains('?'))
                     {
                         Console.WriteLine($"{abstractNode.Name}.{prop.Name} has nullable IOperation elements. This is not allowed in IOperation and will mess up Children generation.");
                         error = true;

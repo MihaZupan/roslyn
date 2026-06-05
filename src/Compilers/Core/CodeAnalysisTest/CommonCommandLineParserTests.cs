@@ -5,6 +5,7 @@
 #nullable disable
 
 using System;
+using System.Buffers;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -1110,8 +1111,10 @@ namespace Microsoft.CodeAnalysis.UnitTests
 
         private string[] ParseSeparatedStrings(string arg, char[] separators, bool removeEmptyEntries = true)
         {
+            // ParseSeparatedStrings requires the SearchValues set to include the quote character.
+            var withQuote = new string(separators) + "\"";
             var builder = ArrayBuilder<ReadOnlyMemory<char>>.GetInstance();
-            CommandLineParser.ParseSeparatedStrings(arg.AsMemory(), separators, removeEmptyEntries, builder);
+            CommandLineParser.ParseSeparatedStrings(arg.AsMemory(), SearchValues.Create(withQuote), removeEmptyEntries, builder);
             var result = builder.Select(x => x.ToString()).ToArray();
             builder.Free();
             return result;

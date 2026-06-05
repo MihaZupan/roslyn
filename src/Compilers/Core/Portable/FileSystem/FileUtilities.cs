@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -208,7 +209,7 @@ namespace Roslyn.Utilities
             }
         }
 
-        private static readonly char[] s_invalidPathChars = Path.GetInvalidPathChars();
+        private static readonly SearchValues<char> s_invalidPathChars = SearchValues.Create(Path.GetInvalidPathChars());
 
         internal static string GetNormalizedPathOrOriginalPath(string path, string? basePath)
         {
@@ -218,7 +219,7 @@ namespace Roslyn.Utilities
         internal static string? NormalizeRelativePath(string path, string? basePath, string? baseDirectory)
         {
             // Does this look like a URI at all or does it have any invalid path characters? If so, just use it as is.
-            if (path.IndexOf("://", StringComparison.Ordinal) >= 0 || path.IndexOfAny(s_invalidPathChars) >= 0)
+            if (path.Contains("://", StringComparison.Ordinal) || path.AsSpan().ContainsAny(s_invalidPathChars))
             {
                 return null;
             }

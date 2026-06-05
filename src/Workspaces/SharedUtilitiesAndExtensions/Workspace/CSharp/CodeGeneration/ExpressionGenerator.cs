@@ -130,9 +130,7 @@ internal static class ExpressionGenerator
             var stringValue = ((IFormattable)value).ToString("R", CultureInfo.InvariantCulture);
 
             var isNotSingle = !IsSpecialType(type, SpecialType.System_Single);
-            var containsDoubleCharacter =
-                stringValue.Contains('E') || stringValue.Contains('e') || stringValue.Contains('.') ||
-                stringValue.Contains('+') || stringValue.Contains('-');
+            var containsDoubleCharacter = stringValue.AsSpan().ContainsAny("Ee.+-");
 
             if (isNotSingle || containsDoubleCharacter)
             {

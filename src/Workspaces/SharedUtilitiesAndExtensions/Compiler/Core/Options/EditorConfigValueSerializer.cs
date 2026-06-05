@@ -165,7 +165,7 @@ internal static class EditorConfigValueSerializer
         }
 
         // Enum.TryParse parses every enum as flags enum, we don't want to multiple values to be specified for enums are not flags.
-        if (str.Contains(","))
+        if (str.Contains(','))
         {
             return false;
         }

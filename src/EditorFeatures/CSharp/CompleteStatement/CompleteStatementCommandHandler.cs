@@ -25,6 +25,7 @@ using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor.Commanding.Commands;
 using Microsoft.VisualStudio.Text.Operations;
 using Microsoft.VisualStudio.Utilities;
+using Roslyn.Utilities;
 
 namespace Microsoft.CodeAnalysis.Editor.CSharp.CompleteStatement;
 
@@ -490,7 +491,7 @@ internal sealed class CompleteStatementCommandHandler(
             return false;
 
         if (currentNode.IsKind(SyntaxKind.StringLiteralExpression, out LiteralExpressionSyntax? literalExpression)
-            && literalExpression.Token.Text.StartsWith("@"))
+            && literalExpression.Token.Text.StartsWith('@'))
         {
             // Verbatim strings start with @", so we only consider the caret to be inside the string if it's after the "
             if (caret.Position <= currentNode.SpanStart + 1)

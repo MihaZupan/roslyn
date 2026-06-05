@@ -363,7 +363,7 @@ internal abstract class AbstractDocCommentCompletionProvider<TSyntax> : LSPCompl
             commitRules = commitRules.Add(WithoutQuoteRule);
         }
 
-        if (displayText.Contains(" "))
+        if (displayText.Contains(' '))
         {
             commitRules = commitRules.Add(WithoutSpaceRule);
         }

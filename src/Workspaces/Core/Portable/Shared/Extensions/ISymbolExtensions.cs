@@ -397,7 +397,7 @@ internal static partial class ISymbolExtensions
             else
             {
                 xpathValue = pathAttribute!.Value;
-                if (xpathValue.StartsWith("/"))
+                if (xpathValue.StartsWith('/'))
                 {
                     // Account for the root <doc> or <member> element
                     xpathValue = "/*" + xpathValue;
@@ -434,7 +434,7 @@ internal static partial class ISymbolExtensions
                         if (index < typeArgs.Length)
                         {
                             var docId = typeArgs[index].GetDocumentationCommentId();
-                            if (docId != null && !docId.StartsWith("!"))
+                            if (docId != null && !docId.StartsWith('!'))
                             {
                                 var replacement = new XElement(DocumentationCommentXmlNames.SeeElementName);
                                 replacement.SetAttributeValue(DocumentationCommentXmlNames.CrefAttributeName, docId);

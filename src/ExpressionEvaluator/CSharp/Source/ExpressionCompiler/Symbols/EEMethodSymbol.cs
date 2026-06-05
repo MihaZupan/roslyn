@@ -527,7 +527,7 @@ namespace Microsoft.CodeAnalysis.CSharp.ExpressionEvaluator
                     {
                         Debug.Assert(local.Locations.Length > 0);
                         var name = local.Name;
-                        if (name.StartsWith("$", StringComparison.Ordinal))
+                        if (name.StartsWith('$'))
                         {
                             diagnostics.Add(ErrorCode.ERR_UnexpectedCharacter, local.GetFirstLocation(), name[0]);
                             return;

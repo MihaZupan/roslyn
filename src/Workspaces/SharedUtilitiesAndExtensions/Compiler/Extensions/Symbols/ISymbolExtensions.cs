@@ -827,7 +827,7 @@ internal static partial class ISymbolExtensions
     /// These are treated as special discard symbol names.
     /// </summary>
     public static bool IsSymbolWithSpecialDiscardName(this ISymbol symbol)
-        => symbol.Name.StartsWith("_") &&
+        => symbol.Name.StartsWith('_') &&
            (symbol.Name.Length == 1 || uint.TryParse(symbol.Name[1..], out _) || symbol.Name.All(n => n.Equals('_')));
 
     /// <summary>

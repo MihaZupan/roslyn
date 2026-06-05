@@ -177,7 +177,7 @@ internal static class DocCommentHelpers
         if (summaryTagStart == -1 || summaryTagEndStart == -1)
         {
             // A really wrong but cheap way to check if this is XML
-            if (!documentation.StartsWith("<", StringComparison.Ordinal) && !documentation.EndsWith(">", StringComparison.Ordinal))
+            if (!documentation.StartsWith('<') && !documentation.EndsWith('>'))
             {
                 // This doesn't look like a doc comment, we'll return it as-is.
                 summary = documentation;

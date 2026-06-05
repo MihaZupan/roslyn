@@ -77,8 +77,8 @@ namespace Roslyn.Utilities
             }
 
             // Use the existing slashes in the path, if they're consistent
-            bool hasSlash = s.IndexOf('/') >= 0;
-            bool hasBackslash = s.IndexOf('\\') >= 0;
+            bool hasSlash = s.Contains('/');
+            bool hasBackslash = s.Contains('\\');
             if (hasSlash && !hasBackslash)
             {
                 return s + '/';
@@ -522,8 +522,7 @@ namespace Roslyn.Utilities
             string? extension = FileNameUtilities.GetExtension(assemblyDisplayNameOrPath);
             return string.Equals(extension, ".dll", StringComparison.OrdinalIgnoreCase)
                 || string.Equals(extension, ".exe", StringComparison.OrdinalIgnoreCase)
-                || assemblyDisplayNameOrPath.IndexOf(DirectorySeparatorChar) != -1
-                || assemblyDisplayNameOrPath.IndexOf(AltDirectorySeparatorChar) != -1;
+                || assemblyDisplayNameOrPath.AsSpan().ContainsAny(DirectorySeparatorChar, AltDirectorySeparatorChar);
         }
 
         /// <summary>
@@ -540,7 +539,7 @@ namespace Roslyn.Utilities
         public static bool ContainsPathComponent(string? path, string component, bool ignoreCase)
         {
             var comparison = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
-            if (path?.IndexOf(component, comparison) >= 0)
+            if (path?.Contains(component, comparison) == true)
             {
                 var comparer = ignoreCase ? StringComparer.OrdinalIgnoreCase : StringComparer.Ordinal;
 
@@ -750,8 +749,8 @@ namespace Roslyn.Utilities
                     var replacement = replacementPrefix + filePath.Substring(oldPrefix.Length);
 
                     // Normalize the path separators if used uniformly in the replacement
-                    bool hasSlash = replacementPrefix.IndexOf('/') >= 0;
-                    bool hasBackslash = replacementPrefix.IndexOf('\\') >= 0;
+                    bool hasSlash = replacementPrefix.Contains('/');
+                    bool hasBackslash = replacementPrefix.Contains('\\');
                     return
                         (hasSlash && !hasBackslash) ? replacement.Replace('\\', '/') :
                         (hasBackslash && !hasSlash) ? replacement.Replace('/', '\\') :

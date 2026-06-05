@@ -96,7 +96,7 @@ namespace Microsoft.CodeAnalysis
             //     /dir/of/editorconfig/file[section] if section starts with a '/', or
             //     /dir/of/editorconfig/file/[section] if section contains '/' but does not start with '/'.
 
-            if (!sectionName.Contains("/"))
+            if (!sectionName.Contains('/'))
             {
                 sb.Append(".*/");
             }

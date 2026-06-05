@@ -85,7 +85,7 @@ namespace Microsoft.CodeAnalysis.ResxSourceGenerator
                     {
                         resourceHintName = Path.GetFileNameWithoutExtension(link);
                         string linkRelativeDir = Path.GetDirectoryName(link);
-                        if (linkRelativeDir.Length > 0 && !linkRelativeDir.EndsWith("\\", StringComparison.Ordinal))
+                        if (linkRelativeDir.Length > 0 && !linkRelativeDir.EndsWith('\\'))
                         {
                             linkRelativeDir += '\\';
                         }

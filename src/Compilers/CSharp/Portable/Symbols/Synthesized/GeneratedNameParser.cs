@@ -36,7 +36,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             {
                 openBracketOffset = 3;
             }
-            else if (name.StartsWith("<", StringComparison.Ordinal))
+            else if (name.StartsWith('<'))
             {
                 openBracketOffset = 0;
             }
@@ -163,7 +163,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
 
         internal static bool TryParseAnonymousTypeParameterName(string typeParameterName, [NotNullWhen(true)] out string? propertyName)
         {
-            if (typeParameterName.StartsWith("<", StringComparison.Ordinal) &&
+            if (typeParameterName.StartsWith('<') &&
                 typeParameterName.EndsWith(">j__TPar", StringComparison.Ordinal))
             {
                 propertyName = typeParameterName.Substring(1, typeParameterName.Length - 9);
@@ -178,7 +178,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         {
             Debug.Assert((char)GeneratedNameKind.PrimaryConstructorParameter == 'P');
 
-            if (fieldName.StartsWith("<", StringComparison.Ordinal) &&
+            if (fieldName.StartsWith('<') &&
                 fieldName.EndsWith(">P", StringComparison.Ordinal))
             {
                 parameterName = fieldName.Substring(1, fieldName.Length - 3);

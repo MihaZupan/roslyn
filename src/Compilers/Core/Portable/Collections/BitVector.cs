@@ -182,8 +182,7 @@ namespace Microsoft.CodeAnalysis
             Word[] bits = (requiredWords == 0) ? s_emptyArray : new Word[requiredWords];
             int lastWord = requiredWords - 1;
             Word bits0 = ~ZeroWord;
-            for (int j = 0; j < lastWord; j++)
-                bits[j] = ~ZeroWord;
+            bits.AsSpan().Fill(~ZeroWord);
             int numTrailingBits = capacity & ((BitsPerWord) - 1);
             if (numTrailingBits > 0)
             {
@@ -197,10 +196,6 @@ namespace Microsoft.CodeAnalysis
                 {
                     bits[lastWord] = lastBits;
                 }
-            }
-            else if (requiredWords > 0)
-            {
-                bits[lastWord] = ~ZeroWord;
             }
 
             return new BitVector(bits0, bits, capacity);

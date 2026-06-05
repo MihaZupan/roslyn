@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Immutable;
 using System.Linq;
+using Roslyn.Utilities;
 
 namespace Microsoft.CodeAnalysis.ProjectSystem;
 
@@ -36,7 +37,7 @@ internal sealed class WatchedDirectory
             path += System.IO.Path.DirectorySeparatorChar;
         }
 
-        if (extensionFilters.Any(static filter => !filter.StartsWith(".")))
+        if (extensionFilters.Any(static filter => !filter.StartsWith('.')))
         {
             throw new ArgumentException($"{nameof(extensionFilters)} should only contain entries starting with a period.", nameof(extensionFilters));
         }

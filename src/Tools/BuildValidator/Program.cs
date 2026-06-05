@@ -394,8 +394,8 @@ namespace BuildValidator
             {
                 // TODO: determine if this subsitution is correct
                 var (key, value) = (entry.Key, entry.Value); // TODO: use Deconstruct in .NET Core
-                var prefix = key.Remove(key.LastIndexOf("*"));
-                var replace = value.Remove(value.LastIndexOf("*"));
+                var prefix = key.Remove(key.LastIndexOf('*'));
+                var replace = value.Remove(value.LastIndexOf('*'));
                 return new SourceLinkEntry(prefix, replace);
             }
         }

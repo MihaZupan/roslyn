@@ -138,17 +138,7 @@ internal static class StringExtensions
     }
 
     public static bool ContainsLineBreak(this string text)
-    {
-        foreach (var ch in text)
-        {
-            if (ch is '\n' or '\r')
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
+        => text.AsSpan().ContainsAny('\n', '\r');
 
     public static int GetNumberOfLineBreaks(this string text)
     {
@@ -172,18 +162,7 @@ internal static class StringExtensions
     }
 
     public static bool ContainsTab(this string text)
-    {
-        // PERF: Tried replacing this with "text.IndexOf('\t')>=0", but that was actually slightly slower
-        foreach (var ch in text)
-        {
-            if (ch == '\t')
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
+        => text.Contains('\t');
 
     public static ImmutableArray<SymbolDisplayPart> ToSymbolDisplayParts(this string text)
         => [new SymbolDisplayPart(SymbolDisplayPartKind.Text, null, text)];

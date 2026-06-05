@@ -1358,8 +1358,8 @@ internal class CSharpCodeParser : TokenizerBackedParser<CSharpTokenizer>
                 // Pull out the value and remove whitespaces and optional quotes
                 var rawValue = string.Concat(TokenBuilder.ToList().Nodes.Select(s => s.Content)).Trim();
 
-                var startsWithQuote = rawValue.StartsWith("\"", StringComparison.Ordinal);
-                var endsWithQuote = rawValue.EndsWith("\"", StringComparison.Ordinal);
+                var startsWithQuote = rawValue.StartsWith('"');
+                var endsWithQuote = rawValue.EndsWith('"');
                 if (startsWithQuote != endsWithQuote)
                 {
                     Context.ErrorSink.OnError(
@@ -1487,7 +1487,7 @@ internal class CSharpCodeParser : TokenizerBackedParser<CSharpTokenizer>
             typeName = directiveText[..commaIndex].Trim();
             assemblyName = directiveText[(commaIndex + 1)..].Trim();
 
-            if (typeName.IsEmpty || assemblyName.IsEmpty || assemblyName.IndexOf(',') >= 0)
+            if (typeName.IsEmpty || assemblyName.IsEmpty || assemblyName.Contains(','))
             {
                 return false;
             }

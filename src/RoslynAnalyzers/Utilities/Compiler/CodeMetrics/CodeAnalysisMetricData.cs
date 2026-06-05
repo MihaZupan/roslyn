@@ -137,7 +137,7 @@ namespace Microsoft.CodeAnalysis.CodeMetrics
 
                 case SymbolKind.NamedType:
                     symbolName = Symbol.ToDisplayString();
-                    var index = symbolName.LastIndexOf(".", StringComparison.OrdinalIgnoreCase);
+                    var index = symbolName.LastIndexOf('.');
                     if (index >= 0 && index < symbolName.Length)
                     {
                         symbolName = symbolName[(index + 1)..];

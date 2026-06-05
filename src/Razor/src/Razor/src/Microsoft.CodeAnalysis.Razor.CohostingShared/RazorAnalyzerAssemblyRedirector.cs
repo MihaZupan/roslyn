@@ -19,7 +19,7 @@ internal sealed class RazorAnalyzerAssemblyRedirector([Import(AllowDefault = tru
 {
     public string? RedirectPath(string fullPath)
     {
-        if (fullPath.IndexOf("razor", StringComparison.OrdinalIgnoreCase) >= 0)
+        if (fullPath.Contains("razor", StringComparison.OrdinalIgnoreCase))
         {
             return razorRedirector?.Value.RedirectPath(fullPath);
         }

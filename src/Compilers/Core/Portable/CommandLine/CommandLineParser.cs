@@ -1,8 +1,9 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
@@ -99,40 +100,26 @@ namespace Microsoft.CodeAnalysis
         /// </remarks>
         internal static bool IsOptionName(string optionName, ReadOnlySpan<char> value)
         {
-            assertAllAscii(optionName.AsSpan());
+            Debug.Assert(Ascii.IsValid(optionName));
 
             if (optionName.Length != value.Length)
                 return false;
 
+            if (!Ascii.IsValid(value))
+            {
+                // If a non-ascii character is present, do an InvariantCultureIgnoreCase comparison.
+                return optionName.AsSpan().Equals(value, StringComparison.InvariantCultureIgnoreCase);
+            }
+
             for (int i = 0; i < optionName.Length; i++)
             {
-                char ch = value[i];
-                if (ch > 127)
-                {
-                    // If a non-ascii character is encountered, do an InvariantCultureIgnoreCase comparison
-                    return optionName.AsSpan().Equals(value, StringComparison.InvariantCultureIgnoreCase);
-                }
-
-                if (optionName[i] != char.ToLowerInvariant(ch))
+                if (optionName[i] != char.ToLowerInvariant(value[i]))
                 {
                     return false;
                 }
             }
 
             return true;
-
-            [Conditional("DEBUG")]
-            static void assertAllAscii(ReadOnlySpan<char> span)
-            {
-                foreach (char ch in span)
-                {
-                    if (ch > 127)
-                    {
-                        Debug.Assert(false);
-                        break;
-                    }
-                }
-            }
         }
 
         internal static bool IsOption(string arg) => IsOption(arg.AsSpan());
@@ -553,7 +540,7 @@ namespace Microsoft.CodeAnalysis
                     }
                 }
 
-                if (!optionsEnded && arg.StartsWith("@", StringComparison.Ordinal))
+                if (!optionsEnded && arg.StartsWith('@'))
                 {
                     // response file:
                     string path = RemoveQuotesAndSlashes(arg.Substring(1)).TrimEnd(null);
@@ -811,7 +798,7 @@ namespace Microsoft.CodeAnalysis
 
         internal static string MismatchedVersionErrorText => CodeAnalysisResources.MismatchedVersion;
 
-        private static readonly char[] s_resourceSeparators = { ',' };
+        private static readonly SearchValues<char> s_resourceSeparators = SearchValues.Create(",\"");
 
         internal static bool TryParseResourceDescription(
             ReadOnlyMemory<char> resourceDescriptor,
@@ -1043,20 +1030,18 @@ namespace Microsoft.CodeAnalysis
                     start++;
                 }
 
-                for (int i = start; i < end; i++)
+                arg = arg.Slice(start, end - start);
+
+                if (arg.Span.Contains('"'))
                 {
-                    if (span[i] == '"')
-                    {
-                        return null;
-                    }
+                    return null;
                 }
 
-                return arg.Slice(start, end - start);
+                return arg;
             }
         }
 
-        private static readonly char[] s_pathSeparators = { ';', ',' };
-        private static readonly char[] s_wildcards = new[] { '*', '?' };
+        private static readonly SearchValues<char> s_pathSeparators = SearchValues.Create(";,\"");
 
         internal static IEnumerable<string> ParseSeparatedPaths(string arg)
         {
@@ -1077,40 +1062,53 @@ namespace Microsoft.CodeAnalysis
         /// <summary>
         /// Split a string by a set of separators, taking quotes into account.
         /// </summary>
-        internal static void ParseSeparatedStrings(ReadOnlyMemory<char>? strMemory, char[] separators, bool removeEmptyEntries, ArrayBuilder<ReadOnlyMemory<char>> builder)
+        internal static void ParseSeparatedStrings(ReadOnlyMemory<char>? strMemory, SearchValues<char> separators, bool removeEmptyEntries, ArrayBuilder<ReadOnlyMemory<char>> builder)
         {
+            Debug.Assert(separators.Contains('"'), "separators must contain the quote character so that the vectorized scan finds both quotes and separators.");
+
             if (strMemory is null)
             {
                 return;
             }
 
-            int nextPiece = 0;
-            var inQuotes = false;
             var memory = strMemory.Value;
-            var span = memory.Span;
-            for (int i = 0; i < span.Length; i++)
+            var tail = memory;
+            bool inQuotes = false;
+
+            while (!tail.IsEmpty)
             {
-                var c = span[i];
-                if (c == '\"')
+                var tailSpan = tail.Span;
+                int rel = inQuotes
+                    ? tailSpan.IndexOf('"')
+                    : tailSpan.IndexOfAny(separators);
+
+                if (rel < 0)
+                {
+                    break;
+                }
+
+                char ch = tailSpan[rel];
+                tail = tail.Slice(rel + 1);
+
+                if (ch == '"')
                 {
                     inQuotes = !inQuotes;
                 }
-                else if (!inQuotes && separators.Contains(c))
+                else
                 {
-                    var current = memory.Slice(nextPiece, i - nextPiece);
-                    if (current.Length > 0 || !removeEmptyEntries)
+                    var current = memory.Slice(0, memory.Length - tail.Length - 1);
+                    if (!current.IsEmpty || !removeEmptyEntries)
                     {
                         builder.Add(current);
                     }
 
-                    nextPiece = i + 1;
+                    memory = tail;
                 }
             }
 
-            var last = memory.Slice(nextPiece);
-            if (last.Length > 0 || !removeEmptyEntries)
+            if (!memory.IsEmpty || !removeEmptyEntries)
             {
-                builder.Add(last);
+                builder.Add(memory);
             }
         }
 
@@ -1158,7 +1156,7 @@ namespace Microsoft.CodeAnalysis
             //   Path With Spaces\goo.cs
 
             string path = RemoveQuotesAndSlashes(arg);
-            int wildcard = path.IndexOfAny(s_wildcards);
+            int wildcard = path.AsSpan().IndexOfAny('*', '?');
             if (wildcard != -1)
             {
                 foreach (var file in ExpandFileNamePattern(path, baseDirectory, SearchOption.TopDirectoryOnly, errors))
@@ -1337,7 +1335,7 @@ namespace Microsoft.CodeAnalysis
             {
                 numBase = 16;
             }
-            else if (value.StartsWith("0", StringComparison.OrdinalIgnoreCase))
+            else if (value.StartsWith('0'))
             {
                 numBase = 8;
             }
@@ -1375,7 +1373,7 @@ namespace Microsoft.CodeAnalysis
             {
                 numBase = 16;
             }
-            else if (value.StartsWith("0", StringComparison.OrdinalIgnoreCase))
+            else if (value.StartsWith('0'))
             {
                 numBase = 8;
             }

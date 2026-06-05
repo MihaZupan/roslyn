@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis.CSharp.Extensions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Formatting;
 using Microsoft.CodeAnalysis.Shared.Extensions;
+using Roslyn.Utilities;
 
 namespace Microsoft.CodeAnalysis.CSharp.Formatting;
 
@@ -47,7 +48,7 @@ internal sealed partial class TriviaDataFactory
                 {
                     Debug.Assert(trivia.ToString() == trivia.ToFullString());
                     var text = trivia.ToString();
-                    if (text.IndexOf('\t') >= 0)
+                    if (text.Contains('\t'))
                     {
                         return true;
                     }
@@ -139,7 +140,7 @@ internal sealed partial class TriviaDataFactory
             var text = trivia.ToString();
 
             // if text contains tab, we will give up perf optimization and use more expensive one to see whether we need to replace this trivia
-            if (text.IndexOf('\t') >= 0)
+            if (text.Contains('\t'))
             {
                 return true;
             }

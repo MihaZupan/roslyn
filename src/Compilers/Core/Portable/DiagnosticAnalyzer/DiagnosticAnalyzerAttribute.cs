@@ -36,10 +36,7 @@ namespace Microsoft.CodeAnalysis.Diagnostics
 
             var languages = new string[additionalLanguages.Length + 1];
             languages[0] = firstLanguage;
-            for (int index = 0; index < additionalLanguages.Length; index++)
-            {
-                languages[index + 1] = additionalLanguages[index];
-            }
+            additionalLanguages.CopyTo(languages, 1);
 
             this.Languages = languages;
         }

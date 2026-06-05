@@ -10,7 +10,6 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Razor;
 using Microsoft.AspNetCore.Razor.PooledObjects;
-using Roslyn.Utilities;
 
 namespace Microsoft.VisualStudio.Razor.Snippets;
 

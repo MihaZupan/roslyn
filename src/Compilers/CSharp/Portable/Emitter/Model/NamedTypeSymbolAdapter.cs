@@ -810,7 +810,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 // Therefore it is a good practice to avoid type names with dots.
                 // Exception: The EE copies type names from metadata, which may contain dots already.
                 Debug.Assert(AdaptedNamedTypeSymbol.IsErrorType() ||
-                    !unsuffixedName.Contains(".") ||
+                    !unsuffixedName.Contains('.') ||
                     AdaptedNamedTypeSymbol.OriginalDefinition is PENamedTypeSymbol, "type name contains dots: " + unsuffixedName);
 
                 return unsuffixedName;

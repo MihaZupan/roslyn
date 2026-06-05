@@ -4,6 +4,7 @@
 
 using Microsoft.CodeAnalysis.Shared.Extensions;
 using Microsoft.CodeAnalysis.Shared.Utilities;
+using Roslyn.Utilities;
 
 namespace Microsoft.CodeAnalysis.Formatting;
 
@@ -36,7 +37,7 @@ internal abstract partial class TreeData
 
             while (currentToken.RawKind != 0)
             {
-                if (currentToken.ToFullString().IndexOf('\n') >= 0)
+                if (currentToken.ToFullString().Contains('\n'))
                 {
                     return currentToken;
                 }

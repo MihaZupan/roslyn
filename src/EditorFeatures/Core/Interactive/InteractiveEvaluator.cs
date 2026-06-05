@@ -71,7 +71,7 @@ internal sealed class CSharpInteractiveEvaluator : IResettableInteractiveEvaluat
         InteractiveEvaluatorLanguageInfoProvider languageInfo,
         string initialWorkingDirectory)
     {
-        Debug.Assert(languageInfo.InteractiveResponseFileName.IndexOfAny([Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar]) == -1);
+        Debug.Assert(!languageInfo.InteractiveResponseFileName.AsSpan().ContainsAny(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
 
         _threadingContext = threadingContext;
         ContentType = contentType;

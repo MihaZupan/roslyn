@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
@@ -279,7 +280,7 @@ namespace Microsoft.CodeAnalysis
         // encodes dots with alternate # character
         private static string EncodeName(string name)
         {
-            if (name.IndexOf('.') >= 0)
+            if (name.Contains('.'))
             {
                 return name.Replace('.', '#');
             }
@@ -1582,15 +1583,16 @@ namespace Microsoft.CodeAnalysis
                 return index >= id.Length ? '\0' : id[index];
             }
 
-            private static readonly char[] s_nameDelimiters = { ':', '.', '(', ')', '{', '}', '[', ']', ',', '\'', '@', '*', '`', '~' };
+            private static readonly SearchValues<char> s_nameDelimiters = SearchValues.Create(":.(){}[],'@*`~");
 
             private static string ParseName(string id, ref int index)
             {
                 string name;
 
-                int delimiterOffset = id.IndexOfAny(s_nameDelimiters, index);
+                int delimiterOffset = id.AsSpan(index).IndexOfAny(s_nameDelimiters);
                 if (delimiterOffset >= 0)
                 {
+                    delimiterOffset += index;
                     name = id.Substring(index, delimiterOffset - index);
                     index = delimiterOffset;
                 }
@@ -1606,7 +1608,7 @@ namespace Microsoft.CodeAnalysis
             // undoes dot encodings within names...
             private static string DecodeName(string name)
             {
-                if (name.IndexOf('#') >= 0)
+                if (name.Contains('#'))
                 {
                     return name.Replace('#', '.');
                 }

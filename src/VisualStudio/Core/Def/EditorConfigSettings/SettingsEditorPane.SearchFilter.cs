@@ -128,6 +128,6 @@ internal sealed partial class SettingsEditorPane
         }
 
         private static bool Match(string columnValue, IVsSearchToken searchToken)
-            => (columnValue is not null) && (columnValue.IndexOf(searchToken.ParsedTokenText, StringComparison.OrdinalIgnoreCase) >= 0);
+            => (columnValue is not null) && columnValue.Contains(searchToken.ParsedTokenText, StringComparison.OrdinalIgnoreCase);
     }
 }

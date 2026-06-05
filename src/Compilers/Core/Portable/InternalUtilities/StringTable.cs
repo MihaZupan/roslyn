@@ -528,12 +528,7 @@ foundIdx:
 
         internal static bool TextEqualsASCII(string text, ReadOnlySpan<byte> ascii)
         {
-#if DEBUG
-            for (var i = 0; i < ascii.Length; i++)
-            {
-                RoslynDebug.Assert((ascii[i] & 0x80) == 0, $"The {nameof(ascii)} input to this method must be valid ASCII.");
-            }
-#endif
+            RoslynDebug.Assert(Ascii.IsValid(ascii), $"The {nameof(ascii)} input to this method must be valid ASCII.");
 
             if (ascii.Length != text.Length)
             {

@@ -5,6 +5,7 @@
 #nullable disable
 
 using System;
+using Roslyn.Utilities;
 
 namespace Microsoft.CodeAnalysis.ExpressionEvaluator
 {
@@ -18,7 +19,7 @@ namespace Microsoft.CodeAnalysis.ExpressionEvaluator
         // the fact that a broad check helps "future proof" this implementation).
         internal static bool IsCompilerGenerated(this string name)
         {
-            return name.StartsWith("<", StringComparison.Ordinal) || (name.IndexOf('$') >= 0);
+            return name.StartsWith('<') || name.Contains('$');
         }
     }
 }

@@ -1002,7 +1002,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             static string escape(string s)
             {
-                Debug.Assert(!s.Contains("&"));
+                Debug.Assert(!s.Contains('&'));
                 return s.Replace("<", "&lt;").Replace(">", "&gt;");
             }
         }

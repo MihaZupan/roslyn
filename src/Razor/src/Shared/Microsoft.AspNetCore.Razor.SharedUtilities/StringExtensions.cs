@@ -441,6 +441,11 @@ internal static class StringExtensions
 #endif
     }
 
+#if NET
+    public static bool Contains(this string text, string value, StringComparison comparisonType) =>
+        text.IndexOf(value, comparisonType) >= 0;
+#endif
+
     /// <summary>
     ///  Reports the zero-based index of the first occurrence of the specified Unicode character in a string instance.
     ///  A parameter specifies the type of search to use for the specified character.

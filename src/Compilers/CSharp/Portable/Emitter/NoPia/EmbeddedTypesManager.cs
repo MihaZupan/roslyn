@@ -45,18 +45,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Emit.NoPia
             base(moduleBeingBuilt)
         {
             _lazyWellKnownTypeMethods = new MethodSymbol[(int)WellKnownMember.Count];
-
-            for (int i = 0; i < _lazyWellKnownTypeMethods.Length; i++)
-            {
-                _lazyWellKnownTypeMethods[i] = ErrorMethodSymbol.UnknownMethod;
-            }
+            _lazyWellKnownTypeMethods.AsSpan().Fill(ErrorMethodSymbol.UnknownMethod);
 
             _lazySpecialTypeMethods = new MethodSymbol[(int)SpecialMember.Count];
-
-            for (int i = 0; i < _lazySpecialTypeMethods.Length; i++)
-            {
-                _lazySpecialTypeMethods[i] = ErrorMethodSymbol.UnknownMethod;
-            }
+            _lazySpecialTypeMethods.AsSpan().Fill(ErrorMethodSymbol.UnknownMethod);
         }
 
         public NamedTypeSymbol GetSystemStringType(SyntaxNode syntaxNodeOpt, DiagnosticBag diagnostics)

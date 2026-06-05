@@ -11,6 +11,7 @@ using Microsoft.CodeAnalysis.PooledObjects;
 using System.Text;
 using System.Diagnostics;
 using System.Linq;
+using Roslyn.Utilities;
 
 namespace Microsoft.Cci
 {
@@ -218,7 +219,7 @@ done:
 
             foreach (var ch in namedType.Name)
             {
-                if (needsEscaping.IndexOf(ch) >= 0)
+                if (needsEscaping.Contains(ch))
                 {
                     mangledName.Append('\\');
                 }

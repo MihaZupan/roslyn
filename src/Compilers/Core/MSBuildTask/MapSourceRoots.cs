@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
+using Roslyn.Utilities;
 
 namespace Microsoft.CodeAnalysis.BuildTasks
 {
@@ -193,7 +194,7 @@ namespace Microsoft.CodeAnalysis.BuildTasks
                                 }
                             }
 
-                            Debug.Assert(mappedTopLevelPath.EndsWith("/", StringComparison.Ordinal));
+                            Debug.Assert(mappedTopLevelPath.EndsWith('/'));
                             root.SetMetadata(Names.MappedPath, mappedTopLevelPath + EnsureEndsWithSlash(nestedRoot).Replace('\\', '/'));
                             root.SetMetadata(Names.ContainingRoot, containingRoot);
                             root.SetMetadata(Names.NestedRoot, nestedRoot);

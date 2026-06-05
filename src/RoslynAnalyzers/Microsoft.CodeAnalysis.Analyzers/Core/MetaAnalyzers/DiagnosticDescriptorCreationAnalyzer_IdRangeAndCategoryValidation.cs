@@ -243,7 +243,7 @@ namespace Microsoft.CodeAnalysis.Analyzers.MetaAnalyzers
             foreach (var line in lines)
             {
                 var contents = line.ToString();
-                if (contents.Length == 0 || contents.StartsWith("#", StringComparison.Ordinal))
+                if (contents.Length == 0 || contents.StartsWith('#'))
                 {
                     // Ignore empty lines and comments.
                     continue;

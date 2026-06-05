@@ -176,7 +176,7 @@ namespace Microsoft.CodeAnalysis.ExpressionEvaluator
                 return false;
             }
 
-            if (member.Name.Contains("."))
+            if (member.Name.Contains('.'))
             {
                 return false;
             }

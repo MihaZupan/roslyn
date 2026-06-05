@@ -339,7 +339,7 @@ internal ref partial struct Worker
         AddClassification(node.ColonToken, ClassificationTypeNames.PreprocessorKeyword);
 
         var contentText = node.Content.Text.AsSpan();
-        var firstWhitespaceIndex = contentText.IndexOfAny([' ', '\t']);
+        var firstWhitespaceIndex = contentText.IndexOfAny(' ', '\t');
 
         if (firstWhitespaceIndex <= 0)
         {

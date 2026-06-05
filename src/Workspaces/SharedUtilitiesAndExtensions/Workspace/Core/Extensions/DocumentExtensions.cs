@@ -104,7 +104,7 @@ internal static partial class DocumentExtensions
         // SourceGeneratedDocument.Identity is internal to the Workspaces assembly.
         return document is SourceGeneratedDocument &&
                document.FilePath is string filePath &&
-               filePath.IndexOf(RazorSourceGeneratorTypeName, StringComparison.Ordinal) >= 0;
+               filePath.Contains(RazorSourceGeneratorTypeName, StringComparison.Ordinal);
 #endif
     }
 

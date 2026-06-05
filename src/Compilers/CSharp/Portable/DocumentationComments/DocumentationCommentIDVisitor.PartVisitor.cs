@@ -5,6 +5,7 @@
 #nullable disable
 
 using System;
+using System.Buffers;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             // Select callers within this type use this one.
             private static readonly PartVisitor s_parameterOrReturnTypeInstance = new PartVisitor(inParameterOrReturnType: true);
 
-            private static readonly char[] s_escapedMetadataNameChars = [':', '.', '<', '>'];
+            private static readonly SearchValues<char> s_escapedMetadataNameChars = SearchValues.Create(":.<>");
 
             private readonly bool _inParameterOrReturnType;
 
@@ -273,7 +274,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 string metadataName = symbol.MetadataName;
 
-                if (metadataName.IndexOfAny(s_escapedMetadataNameChars) == -1)
+                if (!metadataName.AsSpan().ContainsAny(s_escapedMetadataNameChars))
                 {
                     return metadataName;
                 }

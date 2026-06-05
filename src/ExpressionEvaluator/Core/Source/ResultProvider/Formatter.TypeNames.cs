@@ -280,7 +280,7 @@ namespace Microsoft.CodeAnalysis.ExpressionEvaluator
             var @namespace = type.Namespace;
             if (!string.IsNullOrEmpty(@namespace))
             {
-                if (@namespace.Contains("."))
+                if (@namespace.Contains('.'))
                 {
                     bool sawSingleInvalidIdentifier;
                     var pooled = PooledStringBuilder.GetInstance();

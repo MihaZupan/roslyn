@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
@@ -101,7 +102,7 @@ namespace Microsoft.CodeAnalysis
         /// </summary>
         private struct SerializedTypeDecoder
         {
-            private static readonly char[] s_typeNameDelimiters = { '+', ',', '[', ']', '*' };
+            private static readonly SearchValues<char> s_typeNameDelimiters = SearchValues.Create("+,[]*");
             private readonly string _input;
             private int _offset;
 
@@ -166,9 +167,10 @@ namespace Microsoft.CodeAnalysis
 
                 while (!EndOfInput)
                 {
-                    int i = _input.IndexOfAny(s_typeNameDelimiters, _offset);
+                    int i = _input.AsSpan(_offset).IndexOfAny(s_typeNameDelimiters);
                     if (i >= 0)
                     {
+                        i += _offset;
                         char c = _input[i];
 
                         // Found name, which could be a generic name with arity.
@@ -177,7 +179,7 @@ namespace Microsoft.CodeAnalysis
                         Debug.Assert(decodedString != null);
 
                         // Type name is generic if the decoded name of the top level type OR any of the outer types of a nested type had the '`' character.
-                        isGenericTypeName = isGenericTypeName || decodedString.IndexOf(GenericTypeNameManglingChar) >= 0;
+                        isGenericTypeName = isGenericTypeName || decodedString.Contains(GenericTypeNameManglingChar);
                         typeNameBuilder.Append(decodedString);
 
                         switch (c)
@@ -628,19 +630,12 @@ ExitDecodeTypeName:
             // PERF: Avoid String.Split because of the allocations. Also, we can special-case
             // for "System" if it is the first or only part.
 
-            int dots = 0;
             var nameSpan = nameMemory.Span;
-            foreach (char ch in nameSpan)
-            {
-                if (ch == DotDelimiter)
-                {
-                    dots++;
-                }
-            }
+            int dots = nameSpan.Count(DotDelimiter);
 
             if (dots == 0)
             {
-                return nameMemory.Span.SequenceEqual(SystemString.AsSpan()) ? splitSystemString : ImmutableArray.Create(convert(nameMemory));
+                return nameSpan.SequenceEqual(SystemString.AsSpan()) ? splitSystemString : ImmutableArray.Create(convert(nameMemory));
             }
 
             var result = ArrayBuilder<T>.GetInstance(dots + 1);
@@ -973,7 +968,7 @@ DoneWithSequence:
         /// </summary>
         internal static bool IsValidMetadataIdentifier(string? str)
         {
-            return !string.IsNullOrEmpty(str) && str.IsValidUnicodeString() && str.IndexOf('\0') == -1;
+            return !string.IsNullOrEmpty(str) && str.IsValidUnicodeString() && !str.Contains('\0');
         }
 
         /// <summary>

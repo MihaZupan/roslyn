@@ -14,6 +14,7 @@ using System.Xml;
 using Microsoft.Build.Locator;
 using Microsoft.CodeAnalysis.CodeMetrics;
 using Microsoft.CodeAnalysis.MSBuild;
+using Roslyn.Utilities;
 
 namespace Metrics
 {
@@ -80,7 +81,7 @@ namespace Metrics
                 for (int i = 0; i < args.Length; i++)
                 {
                     var arg = args[i];
-                    if (!arg.StartsWith("/", StringComparison.Ordinal) && !arg.StartsWith("-", StringComparison.Ordinal))
+                    if (!arg.StartsWith('/') && !arg.StartsWith('-'))
                     {
                         return usage();
                     }

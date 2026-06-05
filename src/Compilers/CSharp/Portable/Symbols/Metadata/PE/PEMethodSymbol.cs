@@ -1216,7 +1216,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols.Metadata.PE
         {
             if (this.HasSpecialName)
             {
-                if (_name.StartsWith(".", StringComparison.Ordinal))
+                if (_name.StartsWith('.'))
                 {
                     // 10.5.1 Instance constructor
                     // An instance constructor shall be an instance (not static or virtual) method,

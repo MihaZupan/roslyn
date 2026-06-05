@@ -4,6 +4,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
@@ -20,8 +21,6 @@ internal abstract class AbstractReferenceDirectiveCompletionProvider : AbstractD
         commitCharacterRules: [CharacterSetModificationRule.Create(CharacterSetModificationKind.Replace, GetCommitCharacters())],
         enterKeyRule: EnterKeyRule.Never,
         selectionBehavior: CompletionItemSelectionBehavior.HardSelection);
-
-    private static readonly char[] s_pathIndicators = ['/', '\\', ':'];
 
     private static ImmutableArray<char> GetCommitCharacters()
     {
@@ -49,7 +48,7 @@ internal abstract class AbstractReferenceDirectiveCompletionProvider : AbstractD
 
     protected override async Task ProvideCompletionsAsync(CompletionContext context, string pathThroughLastSlash)
     {
-        if (context.Document.Project.CompilationOptions.MetadataReferenceResolver is RuntimeMetadataReferenceResolver resolver && pathThroughLastSlash.IndexOfAny(s_pathIndicators) < 0)
+        if (context.Document.Project.CompilationOptions.MetadataReferenceResolver is RuntimeMetadataReferenceResolver resolver && !pathThroughLastSlash.AsSpan().ContainsAny('/', '\\', ':'))
         {
             foreach (var (name, path) in resolver.TrustedPlatformAssemblies)
             {
@@ -64,7 +63,7 @@ internal abstract class AbstractReferenceDirectiveCompletionProvider : AbstractD
             }
         }
 
-        if (pathThroughLastSlash.IndexOf(',') < 0)
+        if (!pathThroughLastSlash.Contains(','))
         {
             var helper = GetFileSystemCompletionHelper(context.Document, Glyph.Assembly, RuntimeMetadataReferenceResolver.AssemblyExtensions, s_rules);
             context.AddItems(await helper.GetItemsAsync(pathThroughLastSlash, context.CancellationToken).ConfigureAwait(false));

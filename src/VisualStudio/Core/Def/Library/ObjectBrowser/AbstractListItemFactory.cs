@@ -421,7 +421,7 @@ internal abstract class AbstractListItemFactory
                 {
                     builder.Add(namespaceListItem);
                 }
-                else if (namespaceListItem.SearchText.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0)
+                else if (namespaceListItem.SearchText.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 {
                     builder.Add(namespaceListItem);
                 }
@@ -706,7 +706,7 @@ internal abstract class AbstractListItemFactory
 
         foreach (var listItem in listItems)
         {
-            if (listItem.DisplayText.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0)
+            if (listItem.DisplayText.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             {
                 finalBuilder.Add(listItem);
             }
@@ -758,7 +758,7 @@ internal abstract class AbstractListItemFactory
                 {
                     builder.Add(typeListItem);
                 }
-                else if (typeListItem.SearchText.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0)
+                else if (typeListItem.SearchText.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 {
                     builder.Add(typeListItem);
                 }
@@ -793,7 +793,7 @@ internal abstract class AbstractListItemFactory
                     {
                         builder.Add(memberListItem);
                     }
-                    else if (memberListItem.SearchText.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0)
+                    else if (memberListItem.SearchText.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                     {
                         builder.Add(memberListItem);
                     }

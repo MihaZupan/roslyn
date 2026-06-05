@@ -4724,7 +4724,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return null;
                 }
 
-                if (token.Text.Contains("u") || token.Text.Contains("U") || token.Text.Contains("l") || token.Text.Contains("L"))
+                if (token.Text.AsSpan().ContainsAny("uUlL"))
                 {
                     return null;
                 }
@@ -4739,7 +4739,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return null;
                 }
 
-                if (token.Text.Contains("u") || token.Text.Contains("U"))
+                if (token.Text.AsSpan().ContainsAny('u', 'U'))
                 {
                     return null;
                 }

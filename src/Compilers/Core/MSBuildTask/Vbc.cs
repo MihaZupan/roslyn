@@ -649,8 +649,8 @@ namespace Microsoft.CodeAnalysis.BuildTasks
             // We can also return immediately if the current string is not a warning or error
             // and we have not seen a warning or error yet. 'Error' and 'Warning' are not localized.
             if (_vbErrorLines.Count == 0 &&
-                singleLine.IndexOf("warning", StringComparison.OrdinalIgnoreCase) == -1 &&
-                singleLine.IndexOf("error", StringComparison.OrdinalIgnoreCase) == -1)
+                !singleLine.Contains("warning", StringComparison.OrdinalIgnoreCase) &&
+                !singleLine.Contains("error", StringComparison.OrdinalIgnoreCase))
             {
                 base.LogEventsFromTextOutput(singleLine, messageImportance);
                 return;

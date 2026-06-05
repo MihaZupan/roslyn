@@ -12,6 +12,7 @@ using Microsoft.CodeAnalysis.CodeGeneration;
 using Microsoft.CodeAnalysis.Internal.Log;
 using Microsoft.CodeAnalysis.PooledObjects;
 using Microsoft.CodeAnalysis.Shared.Extensions;
+using Roslyn.Utilities;
 
 namespace Microsoft.CodeAnalysis.GenerateMember.GenerateVariable;
 
@@ -120,7 +121,7 @@ internal abstract partial class AbstractGenerateVariableService<TService, TSimpl
     {
         // Check If the user explicitly used _ as the start of the name they're generating.  Don't offer to generate
         // a non-field symbol unless that's genuinely the naming style they have setup.
-        if (state.IdentifierToken.ValueText.StartsWith("_"))
+        if (state.IdentifierToken.ValueText.StartsWith('_'))
         {
             var namingStyle = await document.GetApplicableNamingRuleAsync(kind, accessibility, cancellationToken).ConfigureAwait(false);
             if (namingStyle.NamingStyle.Prefix != "_")

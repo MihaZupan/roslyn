@@ -285,13 +285,13 @@ namespace RunTests
 
             static string GetTypeName(string fullyQualifiedTestName)
             {
-                var periodBeforeMethod = fullyQualifiedTestName.LastIndexOf(".");
+                var periodBeforeMethod = fullyQualifiedTestName.LastIndexOf('.');
                 return fullyQualifiedTestName[..periodBeforeMethod];
             }
 
             static string GetName(string fullyQualifiedName)
             {
-                var lastPeriod = fullyQualifiedName.LastIndexOf(".");
+                var lastPeriod = fullyQualifiedName.LastIndexOf('.');
                 return fullyQualifiedName[(lastPeriod + 1)..];
             }
         }

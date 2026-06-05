@@ -261,7 +261,7 @@ internal abstract partial class AbstractReferenceFinder : IReferenceFinder
         }
 
         // Parse the prefix
-        if (docCommentId.StartsWith("~"))
+        if (docCommentId.StartsWith('~'))
         {
             if (docCommentId.Length < 3)
                 return false;
@@ -301,8 +301,7 @@ internal abstract partial class AbstractReferenceFinder : IReferenceFinder
         out ReadOnlyMemory<char> idPartBeforeArguments,
         out ReadOnlyMemory<char> arguments)
     {
-        ReadOnlySpan<char> argumentSeparators = stackalloc[] { '(', '[' };
-        var indexOfArguments = id.Span.IndexOfAny(argumentSeparators);
+        var indexOfArguments = id.Span.IndexOfAny('(', '[');
         if (indexOfArguments < 0)
         {
             idPartBeforeArguments = id;

@@ -57,7 +57,7 @@ namespace Microsoft.CodeAnalysis.ReleaseTracking
             foreach (TextLine line in sourceText.Lines)
             {
                 string lineText = line.ToString().Trim();
-                if (string.IsNullOrWhiteSpace(lineText) || lineText.StartsWith(";", StringComparison.Ordinal))
+                if (string.IsNullOrWhiteSpace(lineText) || lineText.StartsWith(';'))
                 {
                     // Skip blank and comment lines.
                     continue;

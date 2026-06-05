@@ -378,7 +378,7 @@ internal sealed class CommitManager : IAsyncCompletionCommitManager
         }
 
         // Fall back to the default rules for this language's completion service.
-        return completionRules.DefaultCommitCharacters.IndexOf(ch) >= 0;
+        return completionRules.DefaultCommitCharacters.Contains(ch);
     }
 
     internal static bool SendEnterThroughToEditor(CompletionRules rules, RoslynCompletionItem item, string textTypedSoFar)

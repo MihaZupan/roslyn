@@ -270,7 +270,7 @@ internal static class CodeWriterExtensions
 
     public static CodeWriter WriteStringLiteral(this CodeWriter writer, ReadOnlyMemory<char> literal, bool utf8 = false)
     {
-        if (literal.Length >= 256 && literal.Length <= 1500 && literal.Span.IndexOf('\0') == -1)
+        if (literal.Length >= 256 && literal.Length <= 1500 && !literal.Span.Contains('\0'))
         {
             WriteVerbatimStringLiteral(writer, literal, utf8);
         }

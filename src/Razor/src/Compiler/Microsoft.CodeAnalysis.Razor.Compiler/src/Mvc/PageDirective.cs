@@ -80,8 +80,8 @@ public class PageDirective
         // Tokens aren't captured if they're malformed. Therefore, this method will
         // always be called with a valid token content.
         Debug.Assert(content.Length >= 2);
-        Debug.Assert(content.StartsWith("\"", StringComparison.Ordinal));
-        Debug.Assert(content.EndsWith("\"", StringComparison.Ordinal));
+        Debug.Assert(content.StartsWith('"'));
+        Debug.Assert(content.EndsWith('"'));
 
         return content.Substring(1, content.Length - 2);
     }

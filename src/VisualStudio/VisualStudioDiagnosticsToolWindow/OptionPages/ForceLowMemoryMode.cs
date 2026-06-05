@@ -93,10 +93,7 @@ internal sealed class ForceLowMemoryMode
                         var block = new byte[BlockSize];
 
                         // initialize block bits (so the memory actually gets allocated.. silly runtime!)
-                        for (var i = 0; i < BlockSize; i++)
-                        {
-                            block[i] = 0xFF;
-                        }
+                        block.AsSpan().Fill(0xFF);
 
                         _blocks.Add(block);
 

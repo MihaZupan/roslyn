@@ -295,7 +295,7 @@ internal partial class ItemManager
                         }
                         else
                         {
-                            if (_snapshotData.Defaults.IndexOf(matchResult.CompletionItem.FilterText) >= 0)
+                            if (_snapshotData.Defaults.Contains(matchResult.CompletionItem.FilterText))
                             {
                                 includedDefaults.TryAdd(matchResult.CompletionItem.FilterText, matchResult);
                             }

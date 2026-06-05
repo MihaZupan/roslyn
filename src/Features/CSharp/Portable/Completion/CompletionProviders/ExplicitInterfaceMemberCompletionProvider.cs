@@ -115,11 +115,9 @@ internal sealed partial class ExplicitInterfaceMemberCompletionProvider() : Abst
 
     private static (string text, string suffix) SplitMemberName(string memberString)
     {
-        for (var i = 0; i < memberString.Length; i++)
-        {
-            if (memberString[i] is '(' or '[' or '<')
-                return (memberString[0..i], memberString[i..]);
-        }
+        var i = memberString.AsSpan().IndexOfAny('(', '[', '<');
+        if (i >= 0)
+            return (memberString[0..i], memberString[i..]);
 
         return (memberString, "");
     }

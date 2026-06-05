@@ -70,7 +70,7 @@ internal sealed class CSharpFormattingInteractionService(EditorOptionsService ed
         if (ch is '#' or 'n' && !isSmartIndent)
             return false;
 
-        return s_supportedChars.IndexOf(ch) >= 0;
+        return s_supportedChars.Contains(ch);
     }
 
     public async Task<ImmutableArray<TextChange>> GetFormattingChangesAsync(

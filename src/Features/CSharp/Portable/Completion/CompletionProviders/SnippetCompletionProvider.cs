@@ -175,7 +175,7 @@ internal sealed class SnippetCompletionProvider() : LSPCompletionProvider
 
         if (isPreProcessorContext)
         {
-            snippets = snippets.Where(snippet => snippet.Shortcut != null && snippet.Shortcut.StartsWith("#", StringComparison.Ordinal));
+            snippets = snippets.Where(snippet => snippet.Shortcut != null && snippet.Shortcut.StartsWith('#'));
         }
 
         return snippets.SelectAsArray(snippet =>

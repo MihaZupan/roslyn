@@ -264,7 +264,7 @@ internal static partial class SettingsUpdateHelper
 
         static bool IsNotEmptyOrComment(string currentLineText)
         {
-            return !string.IsNullOrWhiteSpace(currentLineText) && !currentLineText.Trim().StartsWith("#", StringComparison.OrdinalIgnoreCase);
+            return !string.IsNullOrWhiteSpace(currentLineText) && !currentLineText.Trim().StartsWith('#');
         }
 
         static bool HeaderMatchesLanguageRequirements(Language language, string[] splicedFileExtensions)

@@ -135,7 +135,7 @@ internal sealed class NewTypeDestinationSelectionViewModel : AbstractNotifyPrope
             return false;
         }
 
-        if (trimmedFileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+        if (trimmedFileName.AsSpan().ContainsAny(Path.GetInvalidFileNameChars()))
         {
             message = ServicesVSResources.Illegal_characters_in_path;
             return false;

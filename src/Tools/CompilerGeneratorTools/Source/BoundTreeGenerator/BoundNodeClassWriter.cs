@@ -1769,7 +1769,7 @@ namespace BoundTreeGenerator
             {
                 case TargetLanguage.CSharp:
                     {
-                        if (!typeName.Contains("<"))
+                        if (!typeName.Contains('<'))
                             return typeName;
                         int iStart = typeName.IndexOf('<');
                         return typeName.Substring(0, iStart);
@@ -1796,7 +1796,7 @@ namespace BoundTreeGenerator
             {
                 case TargetLanguage.CSharp:
                     {
-                        if (!typeName.Contains("<"))
+                        if (!typeName.Contains('<'))
                             return string.Empty;
                         int iStart = typeName.IndexOf('<');
                         int iEnd = typeName.IndexOf('>', iStart + 1);

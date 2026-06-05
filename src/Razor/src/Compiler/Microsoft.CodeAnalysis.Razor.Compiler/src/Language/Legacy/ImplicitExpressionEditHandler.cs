@@ -243,7 +243,7 @@ internal class ImplicitExpressionEditHandler : SpanEditHandler
         var relativePosition = changeStart - target.Position;
         var deletionContent = target.GetContent().AsSpan(relativePosition, changeLength);
 
-        if (deletionContent.IndexOfAny('(', ')') >= 0)
+        if (deletionContent.ContainsAny('(', ')'))
         {
             // Change deleted some parenthesis
             return false;
@@ -260,7 +260,7 @@ internal class ImplicitExpressionEditHandler : SpanEditHandler
             return false;
         }
 
-        if (change.NewText.IndexOfAny(new[] { '(', ')' }) >= 0)
+        if (change.NewText.AsSpan().ContainsAny('(', ')'))
         {
             // Insertions of parenthesis aren't handled by us. If someone else wants to accept it, they can.
             return false;

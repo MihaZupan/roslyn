@@ -90,7 +90,7 @@ public sealed class AssemblyAttributeInjectionPass : IntermediateNodePassBase, I
         }
 
         // Checking for both / and \ because a \ will become a /.
-        if (!relativePath.StartsWith("/", StringComparison.Ordinal) && !relativePath.StartsWith("\\", StringComparison.Ordinal))
+        if (!relativePath.StartsWith('/') && !relativePath.StartsWith('\\'))
         {
             relativePath = "/" + relativePath;
         }

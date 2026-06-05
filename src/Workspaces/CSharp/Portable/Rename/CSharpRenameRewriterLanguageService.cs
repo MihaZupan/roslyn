@@ -142,7 +142,7 @@ internal sealed class CSharpRenameConflictLanguageService() : AbstractRenameRewr
 
             _aliasSymbol = _renamedSymbol as IAliasSymbol;
             _renamableDeclarationLocation = _renamedSymbol.Locations.FirstOrDefault(loc => loc.IsInSource && loc.SourceTree == _semanticModel.SyntaxTree);
-            _isVerbatim = _replacementText.StartsWith("@", StringComparison.Ordinal);
+            _isVerbatim = _replacementText.StartsWith('@');
 
             _simplificationService = parameters.Document.Project.Services.GetRequiredService<ISimplificationService>();
             _semanticFactsService = parameters.Document.Project.Services.GetRequiredService<ISemanticFactsService>();
@@ -1165,7 +1165,7 @@ internal sealed class CSharpRenameConflictLanguageService() : AbstractRenameRewr
                 return false;
         }
 
-        var escapedIdentifier = replacementText.StartsWith("@", StringComparison.Ordinal)
+        var escapedIdentifier = replacementText.StartsWith('@')
             ? replacementText : "@" + replacementText;
 
         // Make sure we got an identifier. 

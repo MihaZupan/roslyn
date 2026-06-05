@@ -82,6 +82,37 @@ internal static class SpanExtensions
         span.Length != 0 && (span[^1]?.Equals(value) ?? (object?)value is null);
 #endif
 
+#if !NET7_0_OR_GREATER
+    /// <summary>
+    /// Determines whether the specified value appears within the span.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool Contains<T>(this ReadOnlySpan<T> span, T value)
+        where T : IEquatable<T>? =>
+        span.IndexOf(value) >= 0;
+
+    /// <summary>
+    /// Searches for the first occurrence of any of the specified values.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool ContainsAny(this ReadOnlySpan<char> span, char value0, char value1) =>
+        span.IndexOfAny(value0, value1) >= 0;
+
+    /// <summary>
+    /// Searches for the first occurrence of any of the specified values.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool ContainsAny(this ReadOnlySpan<char> span, char value0, char value1, char value2) =>
+        span.IndexOfAny(value0, value1, value2) >= 0;
+
+    /// <summary>
+    /// Searches for the first occurrence of any of the specified values.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool ContainsAny(this ReadOnlySpan<char> span, ReadOnlySpan<char> values) =>
+        span.IndexOfAny(values) >= 0;
+#endif
+
     extension<T>(Span<T> span)
     {
         public ReversedEnumerable<T> Reversed => new(span);

@@ -339,12 +339,12 @@ internal sealed class CrefCompletionProvider(
     {
         var commitRules = ImmutableArray<CharacterSetModificationRule>.Empty;
 
-        if (displayText.Contains("{"))
+        if (displayText.Contains('{'))
         {
             commitRules = commitRules.Add(s_WithoutOpenBrace);
         }
 
-        if (displayText.Contains("("))
+        if (displayText.Contains('('))
         {
             commitRules = commitRules.Add(s_WithoutOpenParen);
         }

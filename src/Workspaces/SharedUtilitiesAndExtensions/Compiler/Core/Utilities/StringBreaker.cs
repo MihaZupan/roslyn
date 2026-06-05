@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Text;
 using Microsoft.CodeAnalysis.Collections;
 using Microsoft.CodeAnalysis.Text;
 
@@ -189,14 +190,11 @@ internal static class StringBreaker
 
     private static bool IsLower(char c)
     {
-        if (IsAscii(c))
+        if (Ascii.IsValid(c))
         {
             return c is >= 'a' and <= 'z';
         }
 
         return char.IsLower(c);
     }
-
-    private static bool IsAscii(char v)
-        => v < 0x80;
 }

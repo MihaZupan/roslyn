@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #nullable disable
@@ -357,7 +357,7 @@ internal static class TagHelperBlockRewriter
         var transition = SyntaxFactory.RazorMetaCode(SyntaxFactory.MissingToken(SyntaxKind.Transition));
         RazorMetaCodeSyntax colon = null;
         MarkupTextLiteralSyntax parameterName = null;
-        if (attributeName.StartsWith("@", StringComparison.Ordinal))
+        if (attributeName.StartsWith('@'))
         {
             attributeName = attributeName.Substring(1);
             var attributeNameToken = SyntaxFactory.Token(SyntaxKind.Text, attributeName);
@@ -367,7 +367,7 @@ internal static class TagHelperBlockRewriter
             transition = SyntaxFactory.RazorMetaCode(transitionToken);
         }
 
-        if (attributeName.IndexOf(':') != -1)
+        if (attributeName.Contains(':'))
         {
             var segments = attributeName.Split(new[] { ':' }, 2);
 
@@ -418,7 +418,7 @@ internal static class TagHelperBlockRewriter
         var transition = SyntaxFactory.RazorMetaCode(SyntaxFactory.MissingToken(SyntaxKind.Transition));
         RazorMetaCodeSyntax colon = null;
         MarkupTextLiteralSyntax parameterName = null;
-        if (attributeName.StartsWith("@", StringComparison.Ordinal))
+        if (attributeName.StartsWith('@'))
         {
             attributeName = attributeName.Substring(1);
             var attributeNameToken = SyntaxFactory.Token(SyntaxKind.Text, attributeName);
@@ -428,7 +428,7 @@ internal static class TagHelperBlockRewriter
             transition = SyntaxFactory.RazorMetaCode(transitionToken);
         }
 
-        if (attributeName.IndexOf(':') != -1)
+        if (attributeName.Contains(':'))
         {
             var segments = attributeName.Split(new[] { ':' }, 2);
 

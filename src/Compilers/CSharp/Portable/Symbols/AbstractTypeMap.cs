@@ -301,10 +301,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                     if (result == null)
                     {
                         result = new TypeSymbol[original.Length];
-                        for (int j = 0; j < i; j++)
-                        {
-                            result[j] = original[j];
-                        }
+                        original.AsSpan(0, i).CopyTo(result);
                     }
                 }
 
@@ -418,10 +415,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                     if (result == null)
                     {
                         result = new NamedTypeSymbol[original.Length];
-                        for (int j = 0; j < i; j++)
-                        {
-                            result[j] = original[j];
-                        }
+                        original.AsSpan(0, i).CopyTo(result);
                     }
                 }
 

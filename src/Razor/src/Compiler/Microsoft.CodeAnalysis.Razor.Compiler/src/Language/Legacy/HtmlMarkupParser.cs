@@ -364,7 +364,7 @@ internal class HtmlMarkupParser : TokenizerBackedParser<HtmlTokenizer>
 
             // Make sure the current token is not markup, which can be html start tag or @:
             if (!(At(SyntaxKind.OpenAngle) ||
-                (At(SyntaxKind.Transition) && Lookahead(count: 1).Content.StartsWith(":", StringComparison.Ordinal))))
+                (At(SyntaxKind.Transition) && Lookahead(count: 1).Content.StartsWith(':'))))
             {
                 // Don't accept whitespace as markup if the end text tag is followed by csharp.
                 shouldAcceptWhitespaceAndNewLine = false;
@@ -2328,7 +2328,7 @@ internal class HtmlMarkupParser : TokenizerBackedParser<HtmlTokenizer>
             return false;
         }
 
-        if (tagName!.StartsWith("!", StringComparison.Ordinal))
+        if (tagName!.StartsWith('!'))
         {
             tagName = tagName.Substring(1);
         }

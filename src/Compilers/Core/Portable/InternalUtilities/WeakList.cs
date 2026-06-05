@@ -121,10 +121,7 @@ namespace Roslyn.Utilities
             // free WeakReferences
             if (ReferenceEquals(_items, result))
             {
-                while (j < oldSize)
-                {
-                    _items[j++] = null!;
-                }
+                _items.AsSpan(j, oldSize - j).Clear();
             }
         }
 

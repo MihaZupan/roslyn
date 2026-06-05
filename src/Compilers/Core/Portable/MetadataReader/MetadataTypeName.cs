@@ -151,7 +151,7 @@ namespace Microsoft.CodeAnalysis
         public static MetadataTypeName FromTypeName(string typeName, bool useCLSCompliantNameArityEncoding = false, int forcedArity = -1)
         {
             Debug.Assert(typeName != null);
-            Debug.Assert(!typeName.Contains(MetadataHelpers.DotDelimiterString) || typeName.IndexOf(MetadataHelpers.MangledNameRegionStartChar) >= 0);
+            Debug.Assert(!typeName.Contains(MetadataHelpers.DotDelimiterString) || typeName.Contains(MetadataHelpers.MangledNameRegionStartChar));
             Debug.Assert(forcedArity >= -1 && forcedArity < short.MaxValue);
             Debug.Assert(forcedArity == -1 ||
                          !useCLSCompliantNameArityEncoding ||

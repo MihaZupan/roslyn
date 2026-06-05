@@ -237,7 +237,7 @@ internal sealed class GenerateTypeDialogViewModel : AbstractNotifyPropertyChange
                 return false;
             }
 
-            if (trimmedFileName.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
+            if (trimmedFileName.AsSpan().ContainsAny(Path.GetInvalidPathChars()))
             {
                 SendFailureNotification(ServicesVSResources.Illegal_characters_in_path);
                 return false;
@@ -632,7 +632,7 @@ internal sealed class GenerateTypeDialogViewModel : AbstractNotifyPropertyChange
     internal void UpdateFileNameExtension()
     {
         var currentFileName = this.FileName.Trim();
-        if (!string.IsNullOrWhiteSpace(currentFileName) && !currentFileName.EndsWith("\\", StringComparison.Ordinal))
+        if (!string.IsNullOrWhiteSpace(currentFileName) && !currentFileName.EndsWith('\\'))
         {
             if (this.SelectedProject.Language == LanguageNames.CSharp)
             {

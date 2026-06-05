@@ -229,8 +229,8 @@ namespace Microsoft.Cci
         {
             Debug.Assert(name != null);
 
-            int c1 = Count(name, s_separator1[0]);
-            int c2 = Count(name, s_separator2[0]);
+            int c1 = name.AsSpan().Count(s_separator1[0]);
+            int c2 = name.AsSpan().Count(s_separator2[0]);
             char[] separator = (c1 >= c2) ? s_separator1 : s_separator2;
 
             // Estimate 2 bytes per part, if the blob heap gets big we expand the builder once.
@@ -246,20 +246,6 @@ namespace Microsoft.Cci
             }
 
             return GetOrAddBlob(writer);
-        }
-
-        private static int Count(string str, char c)
-        {
-            int count = 0;
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (str[i] == c)
-                {
-                    count++;
-                }
-            }
-
-            return count;
         }
 
         #endregion

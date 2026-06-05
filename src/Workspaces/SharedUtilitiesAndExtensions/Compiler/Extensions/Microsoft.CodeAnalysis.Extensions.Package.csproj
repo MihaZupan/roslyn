@@ -25,6 +25,8 @@
   <ItemGroup>
     <Compile Include="..\..\..\..\Compilers\Core\Portable\InternalUtilities\Hash.cs" Link="Hash.cs" />
     <Compile Include="..\..\..\..\Compilers\Core\Portable\InternalUtilities\RoslynString.cs" Link="RoslynString.cs" />
+    <Compile Include="..\..\..\..\Compilers\Core\Portable\InternalUtilities\SearchValuesPolyfill.cs" Link="SearchValuesPolyfill.cs" />
+    <Compile Include="..\..\..\..\Compilers\Core\Portable\InternalUtilities\StringPolyfills.cs" Link="StringPolyfills.cs" />
     <Compile Include="..\..\..\..\Compilers\Core\Portable\InternalUtilities\StringExtensions.cs" Link="StringExtensions.cs" />
     <Compile Include="..\..\..\..\Compilers\Core\Portable\SpecialTypeExtensions.cs" Link="Symbols\SpecialTypeExtensions.cs" />
   </ItemGroup>

@@ -313,7 +313,7 @@ internal class SnippetExpansionClient : IVsExpansionClient
 
         var delimiterAttribute = codeNode.Attribute("Delimiter");
         var delimiter = delimiterAttribute != null ? delimiterAttribute.Value : "$";
-        if (codeNode.Value.IndexOf(string.Format("{0}end{0}", delimiter), StringComparison.OrdinalIgnoreCase) != -1)
+        if (codeNode.Value.Contains(string.Format("{0}end{0}", delimiter), StringComparison.OrdinalIgnoreCase))
         {
             return false;
         }

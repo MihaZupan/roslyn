@@ -90,11 +90,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 if (_lazyWellKnownTypeMembers == null)
                 {
                     var wellKnownTypeMembers = new Symbol[(int)WellKnownMember.Count];
-
-                    for (int i = 0; i < wellKnownTypeMembers.Length; i++)
-                    {
-                        wellKnownTypeMembers[i] = ErrorTypeSymbol.UnknownResultType;
-                    }
+                    wellKnownTypeMembers.AsSpan().Fill(ErrorTypeSymbol.UnknownResultType);
 
                     Interlocked.CompareExchange(ref _lazyWellKnownTypeMembers, wellKnownTypeMembers, null);
                 }

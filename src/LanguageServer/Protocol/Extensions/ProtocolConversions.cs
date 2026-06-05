@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -198,7 +199,7 @@ internal static partial class ProtocolConversions
     /// </exception>
     public static Uri CreateAbsoluteUri(string absolutePath)
     {
-        var uriString = IsAscii(absolutePath) ? absolutePath : GetAbsoluteUriString(absolutePath);
+        var uriString = Ascii.IsValid(absolutePath) ? absolutePath : GetAbsoluteUriString(absolutePath);
         try
         {
 #pragma warning disable RS0030 // Do not use banned APIs
@@ -285,21 +286,6 @@ internal static partial class ProtocolConversions
 #pragma warning restore
     }
 
-    private static bool IsAscii(char c)
-        => (uint)c <= '\x007f';
-
-    private static bool IsAscii(string filePath)
-    {
-        for (var i = 0; i < filePath.Length; i++)
-        {
-            if (!IsAscii(filePath[i]))
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
 
     public static LSP.TextDocumentPositionParams PositionToTextDocumentPositionParams(int position, SourceText text, Document document)
     {

@@ -634,7 +634,7 @@ internal sealed class ObjectList : AbstractObjectList<AbstractObjectBrowserLibra
                 }
                 else if (Kind == ObjectListKind.Projects)
                 {
-                    if (matchName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0)
+                    if (matchName.Contains(name, StringComparison.OrdinalIgnoreCase))
                     {
                         if (longestMatchedName.Length < name.Length)
                         {

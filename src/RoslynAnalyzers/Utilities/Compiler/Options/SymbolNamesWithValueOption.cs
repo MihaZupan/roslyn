@@ -118,7 +118,7 @@ namespace Analyzer.Utilities
 #pragma warning disable CA1847 // Use 'string.Contains(char)' instead of 'string.Contains(string)' when searching for a single character
                 else if (parts.SymbolName.Equals(".ctor", StringComparison.Ordinal) ||
                     parts.SymbolName.Equals(".cctor", StringComparison.Ordinal) ||
-                    !parts.SymbolName.Contains(".", StringComparison.Ordinal) && !parts.SymbolName.Contains(":", StringComparison.Ordinal))
+                    !parts.SymbolName.AsSpan().ContainsAny('.', ':'))
                 {
                     ProcessName(parts, namesBuilder);
                 }

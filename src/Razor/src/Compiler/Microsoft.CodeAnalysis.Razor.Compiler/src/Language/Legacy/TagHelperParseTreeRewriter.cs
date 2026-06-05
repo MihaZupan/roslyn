@@ -242,7 +242,7 @@ internal static class TagHelperParseTreeRewriter
             var tagName = startTag.GetTagNameWithOptionalBang();
 
             // Could not determine tag name, it can't be a TagHelper, continue on and track the element.
-            if (string.IsNullOrEmpty(tagName) || tagName.StartsWith("!", StringComparison.Ordinal))
+            if (string.IsNullOrEmpty(tagName) || tagName.StartsWith('!'))
             {
                 return false;
             }
@@ -313,7 +313,7 @@ internal static class TagHelperParseTreeRewriter
             rewritten = null;
             var tagName = endTag.GetTagNameWithOptionalBang();
             // Could not determine tag name, it can't be a TagHelper, continue on and track the element.
-            if (string.IsNullOrEmpty(tagName) || tagName.StartsWith("!", StringComparison.Ordinal))
+            if (string.IsNullOrEmpty(tagName) || tagName.StartsWith('!'))
             {
                 return false;
             }

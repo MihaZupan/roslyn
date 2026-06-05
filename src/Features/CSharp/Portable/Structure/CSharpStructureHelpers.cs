@@ -20,7 +20,6 @@ internal static class CSharpStructureHelpers
     public const string Ellipsis = "...";
     public const string MultiLineCommentSuffix = "*/";
     public const int MaxXmlDocCommentBannerLength = 120;
-    private static readonly char[] s_newLineCharacters = ['\r', '\n'];
 
     private static int GetCollapsibleStart(SyntaxToken firstToken)
     {
@@ -124,9 +123,9 @@ internal static class CSharpStructureHelpers
         }
         else if (comment.IsMultiLineComment())
         {
-            var lineBreakStart = comment.ToString().IndexOfAny(s_newLineCharacters);
-
             var text = comment.ToString();
+            var lineBreakStart = text.AsSpan().IndexOfAny('\r', '\n');
+
             if (lineBreakStart >= 0)
             {
                 text = text[..lineBreakStart];

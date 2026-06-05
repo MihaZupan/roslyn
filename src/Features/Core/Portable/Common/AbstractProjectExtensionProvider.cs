@@ -98,7 +98,7 @@ internal abstract class AbstractProjectExtensionProvider<TProvider, TExtension, 
             if (extensionInfo == null)
                 return true;
 
-            if (extensionInfo.DocumentKinds.IndexOf(document.Kind) < 0)
+            if (!extensionInfo.DocumentKinds.Contains(document.Kind))
                 return false;
 
             if (document.FilePath != null &&

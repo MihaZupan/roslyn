@@ -121,6 +121,12 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\Compilers\Core\Portable\InternalUtilities\AsciiPolyfill.cs">
+      <Link>InternalUtilities\AsciiPolyfill.cs</Link>
+    </Compile>
+  </ItemGroup>
+
   <Import Project="..\Microsoft.CommonLanguageServerProtocol.Framework\Microsoft.CommonLanguageServerProtocol.Framework.Shared.projitems" Label="Shared" />
 
 </Project>

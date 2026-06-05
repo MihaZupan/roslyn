@@ -328,7 +328,7 @@ internal static class ClassifiedTagHelperTooltipFactory
 
     private static void ClassifyShortName(List<ClassifiedTextRun> runs, string typeName)
     {
-        var nullableType = typeName.EndsWith("?");
+        var nullableType = typeName.EndsWith('?');
         if (nullableType)
         {
             // Classify the '?' symbol separately from the rest of the type since it's considered punctuation.

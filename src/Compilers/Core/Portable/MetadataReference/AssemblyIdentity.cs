@@ -236,12 +236,12 @@ namespace Microsoft.CodeAnalysis
             // Note: If these checks change, the error messages emitted by the compilers when
             // this case is detected will also need to change. They currently directly
             // name the presence of the NUL character as the reason that the culture name is invalid.
-            return name == null || name.IndexOf('\0') < 0;
+            return name == null || !name.Contains('\0');
         }
 
         private static bool IsValidName([NotNullWhen(true)] string? name)
         {
-            return !string.IsNullOrEmpty(name) && name.IndexOf('\0') < 0;
+            return !string.IsNullOrEmpty(name) && !name.Contains('\0');
         }
 
         internal static readonly Version NullVersion = new Version(0, 0, 0, 0);

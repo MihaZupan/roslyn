@@ -250,7 +250,7 @@ namespace Microsoft.CodeAnalysis
                 Debug.Assert(info.pszCurrentAssemblyPathBuf[info.cchBuf - 1] == '\0');
 
                 var result = Marshal.PtrToStringUni((IntPtr)info.pszCurrentAssemblyPathBuf, (int)info.cchBuf - 1);
-                Debug.Assert(result.IndexOf('\0') == -1);
+                Debug.Assert(!result.Contains('\0'));
                 return result;
             }
         }

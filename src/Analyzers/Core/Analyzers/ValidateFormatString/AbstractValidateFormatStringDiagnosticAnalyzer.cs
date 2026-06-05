@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
@@ -311,10 +312,7 @@ internal abstract class AbstractValidateFormatStringDiagnosticAnalyzer<TSyntaxKi
     private static bool FormatCallWorksAtRuntime(string formatString, int numberOfPlaceholderArguments)
     {
         var testArray = new object[numberOfPlaceholderArguments];
-        for (var i = 0; i < numberOfPlaceholderArguments; i++)
-        {
-            testArray[i] = "test";
-        }
+        testArray.AsSpan().Fill("test");
 
         try
         {
@@ -377,7 +375,7 @@ internal abstract class AbstractValidateFormatStringDiagnosticAnalyzer<TSyntaxKi
         string textInsideBrackets,
         int numberOfPlaceholderArguments)
     {
-        var placeholderIndexText = textInsideBrackets.IndexOf(",") > 0
+        var placeholderIndexText = textInsideBrackets.Contains(',')
             ? textInsideBrackets.Split(',')[0]
             : textInsideBrackets.Split(':')[0];
 

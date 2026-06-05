@@ -384,7 +384,7 @@ internal abstract partial class AbstractLegacyProject
             // worry about accidental propagation out of the Shared project to any containing 'Solution' folders - the check for
             // VSITEMID.Root below already takes care of that.
             var name = (string)nameObj;
-            if (!name.StartsWith("<", StringComparison.OrdinalIgnoreCase))
+            if (!name.StartsWith('<'))
             {
                 names.Insert(0, name);
             }

@@ -498,10 +498,7 @@ namespace Microsoft.DiaSymReader
                 if (count > 0)
                 {
                     var methods = new int[count];
-                    for (int i = 0; i < count; i++)
-                    {
-                        methods[i] = moveNextMethodToken;
-                    }
+                    methods.AsSpan().Fill(moveNextMethodToken);
 
                     try
                     {

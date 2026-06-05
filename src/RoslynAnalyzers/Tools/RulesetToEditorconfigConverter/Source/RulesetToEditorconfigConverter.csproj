@@ -8,7 +8,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\..\Utilities\Compiler\Extensions\ReportDiagnosticExtensions.cs" Link="ReportDiagnosticExtensions.cs" />
-    <Compile Include="..\..\..\Utilities\Compiler\Extensions\StringCompatExtensions.cs" Link="StringCompatExtensions.cs" />
+    <Compile Include="..\..\..\..\Compilers\Core\Portable\InternalUtilities\StringPolyfills.cs" Link="StringPolyfills.cs" />
     <Compile Include="..\..\..\Utilities\Compiler\RulesetToEditorconfigConverter.cs" Link="RulesetToEditorconfigConverter.cs" />
   </ItemGroup>
   <Choose>

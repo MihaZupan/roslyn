@@ -88,7 +88,7 @@ namespace Roslyn.Utilities
 
         internal static bool IsValidClrTypeName([NotNullWhen(returnValue: true)] this string? name)
         {
-            return !RoslynString.IsNullOrEmpty(name) && name.IndexOf('\0') == -1;
+            return !RoslynString.IsNullOrEmpty(name) && !name.Contains('\0');
         }
 
         /// <summary>

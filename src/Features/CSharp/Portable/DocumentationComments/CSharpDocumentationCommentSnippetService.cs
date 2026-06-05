@@ -99,7 +99,7 @@ internal sealed class CSharpDocumentationCommentSnippetService() : AbstractDocum
         {
             // Multi-line (original behavior)
             list.Add("/// <summary>");
-            list.Add("///" + (existingCommentText.StartsWith(" ") ? existingCommentText : $" {existingCommentText}"));
+            list.Add("///" + (existingCommentText.StartsWith(' ') ? existingCommentText : $" {existingCommentText}"));
             list.Add("/// </summary>");
         }
 

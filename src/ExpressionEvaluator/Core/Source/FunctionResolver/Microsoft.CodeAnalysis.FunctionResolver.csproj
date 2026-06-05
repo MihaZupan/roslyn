@@ -35,6 +35,12 @@
     <Compile Include="..\..\..\..\Compilers\Core\Portable\InternalUtilities\UnicodeCharacterUtilities.cs">
       <Link>Compiler\UnicodeCharacterUtilities.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\..\Compilers\Core\Portable\InternalUtilities\SearchValuesPolyfill.cs">
+      <Link>Compiler\InternalUtilities\SearchValuesPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Compilers\Core\Portable\InternalUtilities\StringPolyfills.cs">
+      <Link>Compiler\InternalUtilities\StringPolyfills.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\..\Compilers\CSharp\Portable\Syntax\SyntaxKind.cs">
       <Link>CSharp\Compiler\SyntaxKind.cs</Link>
     </Compile>

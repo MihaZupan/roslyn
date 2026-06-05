@@ -163,7 +163,7 @@ internal sealed class RpcServer
 
 #if DEBUG
         // Assert we didn't put a newline in this, since if we did the receiving side won't know how to parse it
-        Contract.ThrowIfTrue(responseJson.Contains("\r") || responseJson.Contains("\n"));
+        Contract.ThrowIfTrue(responseJson.AsSpan().ContainsAny('\r', '\n'));
 #endif
         using (await _sendingStreamSemaphore.DisposableWaitAsync().ConfigureAwait(false))
         {

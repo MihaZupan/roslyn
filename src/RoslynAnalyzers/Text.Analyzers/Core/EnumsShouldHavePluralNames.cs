@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Text;
 using Analyzer.Utilities;
 using Analyzer.Utilities.Extensions;
 using Humanizer;
@@ -89,7 +90,7 @@ namespace Text.Analyzers
                 return;
             }
 
-            if (!symbol.Name.IsASCII())
+            if (!Ascii.IsValid(symbol.Name))
             {
                 // Skip non-ASCII names.
                 return;

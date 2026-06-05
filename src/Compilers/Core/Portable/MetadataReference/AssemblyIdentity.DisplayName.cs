@@ -219,7 +219,7 @@ namespace Microsoft.CodeAnalysis
                     throw new ArgumentNullException(nameof(displayName));
                 }
 
-                if (displayName.IndexOf('\0') >= 0)
+                if (displayName.Contains('\0'))
                 {
                     return false;
                 }
@@ -447,7 +447,7 @@ namespace Microsoft.CodeAnalysis
 
         private static bool TryParseNameToken(string displayName, ref int position, [NotNullWhen(true)] out string? value)
         {
-            Debug.Assert(displayName.IndexOf('\0') == -1);
+            Debug.Assert(!displayName.Contains('\0'));
 
             int i = position;
 
@@ -600,7 +600,7 @@ namespace Microsoft.CodeAnalysis
         internal static bool TryParseVersion(string str, out ulong result, out AssemblyIdentityParts parts)
         {
             Debug.Assert(str.Length > 0);
-            Debug.Assert(str.IndexOf('\0') < 0);
+            Debug.Assert(!str.Contains('\0'));
 
             const int MaxVersionParts = 4;
             const int BitsPerVersionPart = 16;

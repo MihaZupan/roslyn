@@ -131,7 +131,7 @@ internal sealed class CSharpSnippetExpansionLanguageHelper(
             {
                 continue;
             }
-            else if (candidateUsing.ContainsDiagnostics && !namespaceToImport.Contains("="))
+            else if (candidateUsing.ContainsDiagnostics && !namespaceToImport.Contains('='))
             {
                 // Retry by parsing the namespace as a name and constructing a using directive from it
                 candidateUsing = SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(namespaceToImport))

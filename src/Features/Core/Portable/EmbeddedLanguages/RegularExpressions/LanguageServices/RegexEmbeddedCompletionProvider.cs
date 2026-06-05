@@ -273,7 +273,7 @@ internal sealed partial class RegexEmbeddedCompletionProvider(RegexEmbeddedLangu
             // Note: we still include those in RegexCharClass.EscapeCategories because we
             // don't want to report an error on code that does use these since the .net
             // regex engine will allow them.
-            if (displayText.StartsWith("_"))
+            if (displayText.StartsWith('_'))
             {
                 continue;
             }

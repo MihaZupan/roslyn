@@ -301,7 +301,7 @@ namespace Microsoft.CodeAnalysis.Analyzers.MetaAnalyzers.Fixers
                     continue;
                 }
 
-                if (lineText.StartsWith(";", StringComparison.Ordinal))
+                if (lineText.StartsWith(';'))
                 {
                     builder.Append(originalLineText);
                     continue;

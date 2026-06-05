@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Immutable;
 using System.Globalization;
+using System.Text;
 using Microsoft.CodeAnalysis.Collections;
 using Microsoft.CodeAnalysis.PooledObjects;
 using Microsoft.CodeAnalysis.Shared;
@@ -133,13 +134,10 @@ internal abstract partial class PatternMatcher
 
         private static char ToLower(char v, TextInfo textInfo)
         {
-            return IsAscii(v)
+            return Ascii.IsValid(v)
                 ? ToLowerAsciiInvariant(v)
                 : textInfo.ToLower(v);
         }
-
-        private static bool IsAscii(char v)
-            => v < 0x80;
 
         private static char ToLowerAsciiInvariant(char c)
             => c is >= 'A' and <= 'Z'

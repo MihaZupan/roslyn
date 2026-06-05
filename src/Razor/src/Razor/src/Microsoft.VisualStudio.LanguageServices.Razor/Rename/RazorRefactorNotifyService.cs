@@ -41,7 +41,7 @@ internal sealed class RazorRefactorNotifyService(
             var syntaxTree = reference.SyntaxTree;
 
             // First, we can check the file path of the syntax tree. Razor generated files have a very specific path format
-            if (syntaxTree.FilePath.IndexOf(typeof(RazorSourceGenerator).FullName) == -1 ||
+            if (!syntaxTree.FilePath.Contains(typeof(RazorSourceGenerator).FullName) ||
                 !syntaxTree.FilePath.EndsWith("_razor.g.cs"))
             {
                 continue;

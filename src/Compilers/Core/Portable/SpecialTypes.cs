@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Roslyn.Utilities;
@@ -100,7 +101,7 @@ namespace Microsoft.CodeAnalysis
             {
                 string? name = s_emittedNames[i];
                 RoslynDebug.Assert(name is object);
-                Debug.Assert(name.IndexOf('+') < 0); // Compilers aren't prepared to lookup for a nested special type.
+                Debug.Assert(!name.Contains('+')); // Compilers aren't prepared to lookup for a nested special type.
                 s_nameToTypeIdMap.Add(name, (ExtendedSpecialType)i);
             }
 

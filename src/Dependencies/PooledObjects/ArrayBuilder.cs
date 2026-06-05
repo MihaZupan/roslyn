@@ -37,19 +37,7 @@ namespace Microsoft.CodeAnalysis.PooledObjects
             }
 
             [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-            public T[] A
-            {
-                get
-                {
-                    var result = new T[_builder.Count];
-                    for (var i = 0; i < result.Length; i++)
-                    {
-                        result[i] = _builder[i];
-                    }
-
-                    return result;
-                }
-            }
+            public T[] A => _builder.ToArray();
         }
 
         #endregion

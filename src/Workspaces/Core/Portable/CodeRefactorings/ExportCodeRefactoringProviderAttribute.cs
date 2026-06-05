@@ -80,10 +80,7 @@ public sealed class ExportCodeRefactoringProviderAttribute : ExportAttribute
 
         var languages = new string[additionalLanguages.Length + 1];
         languages[0] = firstLanguage ?? throw new ArgumentNullException(nameof(firstLanguage));
-        for (var index = 0; index < additionalLanguages.Length; index++)
-        {
-            languages[index + 1] = additionalLanguages[index];
-        }
+        additionalLanguages.CopyTo(languages, 1);
 
         this.Languages = languages;
         this._documentKinds = s_defaultDocumentKinds;

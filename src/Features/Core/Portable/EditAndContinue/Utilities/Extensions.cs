@@ -228,7 +228,7 @@ internal static partial class Extensions
     private static bool ParsePrimaryParameterBackingFieldName(string fieldName, [NotNullWhen(true)] out string? parameterName)
     {
         int closing;
-        if (fieldName.StartsWith("<") && (closing = fieldName.IndexOf(">P")) > 1)
+        if (fieldName.StartsWith('<') && (closing = fieldName.IndexOf(">P")) > 1)
         {
             parameterName = fieldName.Substring(1, closing - 1);
             return true;

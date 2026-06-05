@@ -4,6 +4,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -192,11 +193,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 if (_lazySpecialTypeMembers == null)
                 {
                     var specialTypeMembers = new Symbol[(int)SpecialMember.Count];
-
-                    for (int i = 0; i < specialTypeMembers.Length; i++)
-                    {
-                        specialTypeMembers[i] = ErrorTypeSymbol.UnknownResultType;
-                    }
+                    specialTypeMembers.AsSpan().Fill(ErrorTypeSymbol.UnknownResultType);
 
                     Interlocked.CompareExchange(ref _lazySpecialTypeMembers, specialTypeMembers, null);
                 }

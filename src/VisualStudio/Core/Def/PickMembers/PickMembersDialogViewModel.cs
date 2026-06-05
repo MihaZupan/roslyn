@@ -52,7 +52,7 @@ internal sealed class PickMembersDialogViewModel : AbstractNotifyPropertyChanged
         searchText = searchText.Trim();
         MemberContainers = searchText.Length == 0
             ? _allMembers
-            : [.. _allMembers.Where(m => m.SymbolAutomationText.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)];
+            : [.. _allMembers.Where(m => m.SymbolAutomationText.Contains(searchText, StringComparison.OrdinalIgnoreCase))];
         NotifyPropertyChanged(nameof(MemberContainers));
     }
 

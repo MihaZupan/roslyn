@@ -51,7 +51,7 @@ internal partial class InternalOptionsControl : AbstractOptionPageControl
                 }
 
                 // pattern not match
-                if (title.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) < 0)
+                if (!title.Contains(searchBox.Text, StringComparison.OrdinalIgnoreCase))
                 {
                     // hide it
                     item.Visibility = Visibility.Collapsed;

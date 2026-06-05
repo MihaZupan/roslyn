@@ -1080,7 +1080,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                                     if (underlyingAssociatedField is object)
                                     {
                                         Debug.Assert((object)underlyingAssociatedField.ContainingSymbol == TupleUnderlyingType);
-                                        Debug.Assert(TupleUnderlyingType.GetMembers(underlyingAssociatedField.Name).IndexOf(underlyingAssociatedField) < 0);
+                                        Debug.Assert(!TupleUnderlyingType.GetMembers(underlyingAssociatedField.Name).Contains(underlyingAssociatedField));
                                         map.Add(underlyingAssociatedField.OriginalDefinition, underlyingAssociatedField);
                                     }
                                     map.Add(underlyingEvent.OriginalDefinition, member);

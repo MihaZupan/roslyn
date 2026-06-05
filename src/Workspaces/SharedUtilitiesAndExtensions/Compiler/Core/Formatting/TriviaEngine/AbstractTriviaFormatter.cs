@@ -738,12 +738,10 @@ internal abstract class AbstractTriviaFormatter
         }
 
         // try to find end of line
-        for (var i = this.OriginalString.Length - 1; i >= 0; i--)
+        var lastNewLine = this.OriginalString.LastIndexOf('\n');
+        if (lastNewLine >= 0)
         {
-            if (this.OriginalString[i] == '\n')
-            {
-                return new TextSpan(Math.Min(this.StartPosition + i + 1, this.EndPosition), 0);
-            }
+            return new TextSpan(Math.Min(this.StartPosition + lastNewLine + 1, this.EndPosition), 0);
         }
 
         // well, give up and insert at the top

@@ -158,7 +158,7 @@ internal sealed record class Section
         {
             var relativePath = PathUtilities.GetRelativePath(directoryContainingEditorconfig, codeFilePath);
             relativePath = relativePath.Replace("\\", "/");
-            if (!relativePath.StartsWith("/"))
+            if (!relativePath.StartsWith('/'))
             {
                 relativePath = "/" + relativePath;
             }

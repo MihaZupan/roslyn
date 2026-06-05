@@ -622,7 +622,7 @@ internal sealed partial class ContainedDocument : IContainedDocument
 
     private static string GetReplacementStrings(string leftText, string rightText, string initialReplacement)
     {
-        if (leftText.IndexOf(initialReplacement, StringComparison.Ordinal) < 0 && rightText.IndexOf(initialReplacement, StringComparison.Ordinal) < 0)
+        if (!leftText.Contains(initialReplacement, StringComparison.Ordinal) && !rightText.Contains(initialReplacement, StringComparison.Ordinal))
         {
             return initialReplacement;
         }
@@ -632,7 +632,7 @@ internal sealed partial class ContainedDocument : IContainedDocument
         for (var i = 0; true; i++)
         {
             var replacement = string.Format(format, i.ToString(), initialReplacement);
-            if (leftText.IndexOf(replacement, StringComparison.Ordinal) < 0 && rightText.IndexOf(replacement, StringComparison.Ordinal) < 0)
+            if (!leftText.Contains(replacement, StringComparison.Ordinal) && !rightText.Contains(replacement, StringComparison.Ordinal))
             {
                 return replacement;
             }

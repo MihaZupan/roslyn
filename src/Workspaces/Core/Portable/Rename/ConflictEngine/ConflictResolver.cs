@@ -510,5 +510,5 @@ internal static partial class ConflictResolver
     }
 
     private static bool IsIdentifierSeparator(char element)
-        => s_metadataNameSeparators.IndexOf(element) != -1;
+        => s_metadataNameSeparators.Contains(element);
 }

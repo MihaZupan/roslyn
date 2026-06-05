@@ -7529,7 +7529,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 var token = node.Token;
                 var text = node.Token.Text;
-                if (text.EndsWith("l", StringComparison.Ordinal))
+                if (text.EndsWith('l'))
                 {
                     // don't warn on the ul and uL cases.  The 'u' clearly separates the number from the 'l' suffix.
                     if (!text.EndsWith("ul") && !text.EndsWith("Ul"))

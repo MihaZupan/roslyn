@@ -5,6 +5,7 @@
 using System;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Simplification;
+using Roslyn.Utilities;
 
 namespace Microsoft.CodeAnalysis.CSharp.Extensions;
 
@@ -39,14 +40,14 @@ internal static class StringExtensions
             return SyntaxFactory.Identifier(escaped);
         }
 
-        var unescaped = identifier.StartsWith("@", StringComparison.Ordinal)
+        var unescaped = identifier.StartsWith('@')
             ? identifier[1..]
             : identifier;
 
         var token = SyntaxFactory.Identifier(
             default, SyntaxKind.None, "@" + unescaped, unescaped, default);
 
-        if (!identifier.StartsWith("@", StringComparison.Ordinal))
+        if (!identifier.StartsWith('@'))
         {
             token = token.WithAdditionalAnnotations(Simplifier.Annotation);
         }
